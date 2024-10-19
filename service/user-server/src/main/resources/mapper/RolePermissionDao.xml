@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.user.infrastructure.dao.RolePermissionDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.user.infrastructure.pojo.RolePermission">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="roleId" column="role_id" jdbcType="BIGINT"/>
+            <result property="permissionId" column="permission_id" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="deletedId" column="deleted_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,role_id,permission_id,
+        gmt_create,gmt_modified,create_by,
+        update_by,is_deleted,deleted_id
+    </sql>
+
+    <select id="selectPermissionNameByRole" resultType="java.lang.String">
+        SELECT
+            permission_name
+        FROM
+            permission
+        WHERE
+                id IN (
+                SELECT
+                    permission_id
+                FROM
+                    role_permission
+                WHERE
+                    role_id = #{roleId})
+    </select>
+</mapper>

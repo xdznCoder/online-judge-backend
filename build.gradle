@@ -1,0 +1,189 @@
+buildscript { // 构建 gradle 脚本自身需要的资源，可以声明的资源包括依赖项，第三方插件
+    ext { // 依赖版本管理
+        springBootVersion = '3.3.4'
+        springCloudVersion = '2023.0.3'
+        cloudAlibabaVersion = '2023.0.1.2'
+        hutoolVersion = '5.8.32'
+        saTokenVersion = '1.39.0'
+        mybatisPlusVersion = '3.5.8'
+        openapiVersion = '2.6.0'
+        knife4jVersion = '4.5.0'
+        fastjson2Version = '2.0.53'
+        springfoxVersion = '3.0.0'
+        swaggerVersion = '2.2.25'
+        fasterxmlVersion = '2.18.0'
+    }
+
+    // 设置仓库
+    repositories {
+        mavenLocal() // 本地仓库(优先使用)
+        maven {url 'https://maven.aliyun.com/repository/central'} // 阿里云镜像仓库
+        maven{url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/"} // 腾讯云镜像仓库
+        mavenCentral() // 中央仓库
+    }
+
+
+    dependencies {
+        // springboot gradle 插件，方便版本管理
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+// 全局配置(包括根项目与子项目)
+allprojects {
+    group = 'cn.xdzn'
+    version = '1.0-SNAPSHOT'
+
+    // 使用插件
+    apply plugin: 'java'
+    // 不使用该插件，使用api会报错
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+
+    // Java使用版本
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+    // 编码
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    // 配置信息
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    jar { // 禁用普通打包
+        enabled = false
+    }
+
+    test { enabled = false }
+}
+
+// 配置所有的子项目
+subprojects {
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${cloudAlibabaVersion}"
+        }
+
+        dependencies {
+            dependency "cn.hutool:hutool-all:${hutoolVersion}"
+            dependency "cn.dev33:sa-token-redis: ${saTokenVersion}"
+            dependency "cn.dev33:sa-token-spring-boot3-starter:${saTokenVersion}"
+            dependency "com.baomidou:mybatis-plus-spring-boot3-starter:${mybatisPlusVersion}"
+            dependency "org.springdoc:springdoc-openapi-starter-webmvc-api:${openapiVersion}"
+            dependency "org.springdoc:springdoc-openapi-starter-webflux-ui:${openapiVersion}"
+            dependency "io.springfox:springfox-boot-starter:${springfoxVersion}"
+            dependency "com.github.xiaoymin:knife4j-gateway-spring-boot-starter:${knife4jVersion}"
+            dependency "com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:${knife4jVersion}"
+            dependency "com.alibaba.fastjson2:fastjson2:${fastjson2Version}"
+            dependency "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
+            dependency "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        }
+    }
+}
+
+project(":common") {
+    dependencies {
+        api 'cn.dev33:sa-token-redis'
+        api 'cn.dev33:sa-token-spring-boot3-starter'
+        api 'cn.hutool:hutool-all'
+        api 'org.apache.commons:commons-pool2'
+        api 'org.aspectj:aspectjweaver'
+        api 'io.springfox:springfox-boot-starter'
+        api 'com.baomidou:mybatis-plus-spring-boot3-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-mail'
+        api 'org.springframework.boot:spring-boot-starter-web'
+        api 'org.springframework.boot:spring-boot-starter-data-redis'
+        // 下面为 Knife4j 文档所需依赖，缺一不可
+        api 'javax.xml.bind:jaxb-api:2.3.1'
+        api 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+        api "io.swagger.core.v3:swagger-core:${swaggerVersion}"
+        api 'org.springdoc:springdoc-openapi-starter-webflux-ui'
+        api 'org.springdoc:springdoc-openapi-starter-webmvc-api'
+        api "com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:${fasterxmlVersion}"
+    }
+}
+
+project(":gateway") {
+
+    apply plugin: 'org.springframework.boot'
+
+    bootJar {
+        archiveFileName = "xdzn-oj-${project.name}-1.0.jar"
+    }
+
+    dependencies {
+        api project(":common")
+        api ('org.springframework.boot:spring-boot-starter-web') {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        }
+        api 'com.mysql:mysql-connector-j'
+        api 'com.github.xiaoymin:knife4j-gateway-spring-boot-starter'
+        // knife4j 网关依赖
+        api 'org.springframework.cloud:spring-cloud-starter-gateway'
+        api 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+        api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+        api 'org.springframework.boot:spring-boot-starter-validation'
+        api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+        api 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+        api 'org.springframework.boot:spring-boot-starter-actuator'
+    }
+}
+
+project(":service") {
+    subprojects {
+        apply plugin: 'org.springframework.boot'
+        apply plugin: 'io.spring.dependency-management'
+
+        bootJar {
+            archiveFileName = "xdzn-oj-${project.name}-1.0.jar"
+        }
+
+        dependencies {
+            api project(":common")
+            api 'org.springframework.boot:spring-boot-starter-actuator'
+            api 'com.mysql:mysql-connector-j'
+            api 'com.alibaba.fastjson2:fastjson2'
+            api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+            api 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+            api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+            api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+            api 'com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter'
+        }
+    }
+}
+
+// user-service 模块依赖
+project(":service:user-server") {
+    dependencies {
+    }
+}
+
+// problem-service 模块依赖
+project(":service:problem-server") {
+    dependencies {
+
+    }
+}
+
+// judge-service 模块依赖
+project(":service:judge-server") {
+    dependencies {
+
+    }
+}

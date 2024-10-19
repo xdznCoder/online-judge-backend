@@ -1,0 +1,98 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/oj?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        # 用户模块
+        - id: user-server
+          uri: lb://user-server
+          predicates:
+            - Path=/user/**
+        # 题目模块
+        - id: problem-server
+          uri: lb://problem-server
+          predicates:
+            - Path=/problem/**
+        # 判题模块
+        - id: judge-server
+          uri: lb://judge-server
+          predicates:
+            - Path=/judge/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+    nacos:
+      server-addr: localhost:8848
+  application:
+    name: gateway
+server:
+  port: 8776
+  servlet:
+    context-path: /
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs
+    enabled: false
+knife4j:
+  # 聚合swagger文档
+  gateway:
+    routes:
+      - name: 用户服务
+        url: /user/api-docs?group=default
+        service-name: user-server
+        order: 1
+      - name: 题目服务
+        url: /problem/api-docs?group=default
+        service-name: problem-server
+        order: 2
+      - name: 判题服务
+        url: /judge/api-docs?group=default
+        service-name: judge-server
+        order: 3
+    # 是否开启 Knife4j(生产环境下需要关闭)
+    enabled: true
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: authorization
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: 2592000
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  active-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
+  #  读取请求头中的token
+  isReadHeader: true
+  #  取消cookie
+  isReadCookie: false

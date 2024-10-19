@@ -1,0 +1,14 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: oj
+      config:
+        server-addr: localhost:8848
+        namespace: oj
+        group: oj
+        prefix: gateway-server
+        file-extension: yaml

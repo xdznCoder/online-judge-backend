@@ -1,0 +1,16 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: oj
+      config:
+        server-addr: localhost:8848
+        namespace: oj
+        group: oj
+        prefix: judge-server
+        file-extension: yaml

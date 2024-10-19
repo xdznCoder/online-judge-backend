@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.user.infrastructure.dao.PermissionDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.user.infrastructure.pojo.Permission">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="permissionName" column="permission_name" jdbcType="VARCHAR"/>
+            <result property="keyName" column="key_name" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="perms" column="perms" jdbcType="VARCHAR"/>
+            <result property="component" column="component" jdbcType="VARCHAR"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="icon" column="icon" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,permission_name,key_name,
+        path,perms,component,
+        gmt_create,gmt_modified,create_by,
+        update_by,is_deleted,parent_id,
+        icon
+    </sql>
+
+    <select id="getChildren" resultType="cn.xdzn.oj.service.user.infrastructure.pojo.Permission">
+        SELECT
+            `id`,
+            `permission_name`,
+            `key_name`,
+            `path`,
+            `perms`,
+            `component`,
+            `gmt_create`,
+            `gmt_modified`,
+            `create_by`,
+            `update_by`,
+            `is_deleted`,
+            `parent_id`,
+            `icon`,
+            (( SELECT count(*) FROM permission p WHERE p.parent_id = op.id ) > 0 ) AS hasChildren
+        FROM
+            permission op
+        WHERE
+            parent_id = #{parentId}
+    </select>
+    <select id="getPermissionByUser" resultType="cn.xdzn.oj.service.user.infrastructure.pojo.Permission">
+        SELECT DISTINCT
+            *
+        FROM
+            permission p
+                JOIN role_permission rp ON p.id = rp.permission_id
+                JOIN user_role ur ON rp.role_id = ur.role_id
+        WHERE
+            ur.user_id = #{uid}
+    </select>
+</mapper>
