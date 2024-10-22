@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.user.infrastructure.dao;
 
-import cn.xdzn.oj.service.user.infrastructure.pojo.User;
+import cn.xdzn.oj.service.user.domain.user.model.po.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

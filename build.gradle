@@ -81,7 +81,7 @@ subprojects {
 
         dependencies {
             dependency "cn.hutool:hutool-all:${hutoolVersion}"
-            dependency "cn.dev33:sa-token-redis: ${saTokenVersion}"
+            dependency "cn.dev33:sa-token-redis:${saTokenVersion}"
             dependency "cn.dev33:sa-token-spring-boot3-starter:${saTokenVersion}"
             dependency "com.baomidou:mybatis-plus-spring-boot3-starter:${mybatisPlusVersion}"
             dependency "org.springdoc:springdoc-openapi-starter-webmvc-api:${openapiVersion}"

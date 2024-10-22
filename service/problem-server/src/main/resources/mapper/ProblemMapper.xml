@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.problem.infrastructure.dao.ProblemDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.problem.entity.po.Problem">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="problemId" column="problem_id" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="timeLimit" column="time_limit" jdbcType="INTEGER"/>
+            <result property="memoryLimit" column="memory_limit" jdbcType="INTEGER"/>
+            <result property="stackLimit" column="stack_limit" jdbcType="INTEGER"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="input" column="input" jdbcType="VARCHAR"/>
+            <result property="output" column="output" jdbcType="VARCHAR"/>
+            <result property="examples" column="examples" jdbcType="VARCHAR"/>
+            <result property="isRemote" column="is_remote" jdbcType="TINYINT"/>
+            <result property="source" column="source" jdbcType="VARCHAR"/>
+            <result property="difficulty" column="difficulty" jdbcType="INTEGER"/>
+            <result property="hint" column="hint" jdbcType="VARCHAR"/>
+            <result property="auth" column="auth" jdbcType="INTEGER"/>
+            <result property="ioScore" column="io_score" jdbcType="INTEGER"/>
+            <result property="codeShare" column="code_share" jdbcType="TINYINT"/>
+            <result property="judgeMode" column="judge_mode" jdbcType="VARCHAR"/>
+            <result property="judgeCaseMode" column="judge_case_mode" jdbcType="VARCHAR"/>
+            <result property="userExtraFile" column="user_extra_file" jdbcType="VARCHAR"/>
+            <result property="judgeExtraFile" column="judge_extra_file" jdbcType="VARCHAR"/>
+            <result property="spjCode" column="spj_code" jdbcType="VARCHAR"/>
+            <result property="spjLanguage" column="spj_language" jdbcType="VARCHAR"/>
+            <result property="isRemoveEndBlank" column="is_remove_end_blank" jdbcType="TINYINT"/>
+            <result property="openCaseResult" column="open_case_result" jdbcType="TINYINT"/>
+            <result property="isUploadCase" column="is_upload_case" jdbcType="TINYINT"/>
+            <result property="caseVersion" column="case_version" jdbcType="VARCHAR"/>
+            <result property="modifiedUser" column="modified_user" jdbcType="VARCHAR"/>
+            <result property="isGroup" column="is_group" jdbcType="TINYINT"/>
+            <result property="gid" column="gid" jdbcType="BIGINT"/>
+            <result property="applyPublicProgress" column="apply_public_progress" jdbcType="INTEGER"/>
+            <result property="isFileIo" column="is_file_io" jdbcType="TINYINT"/>
+            <result property="ioReadFileName" column="io_read_file_name" jdbcType="VARCHAR"/>
+            <result property="ioWriteFileName" column="io_write_file_name" jdbcType="VARCHAR"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,problem_id,title,
+        author,type,time_limit,
+        memory_limit,stack_limit,description,
+        input,output,examples,
+        is_remote,source,difficulty,
+        hint,auth,io_score,
+        code_share,judge_mode,judge_case_mode,
+        user_extra_file,judge_extra_file,spj_code,
+        spj_language,is_remove_end_blank,open_case_result,
+        is_upload_case,case_version,modified_user,
+        is_group,gid,apply_public_progress,
+        is_file_io,io_read_file_name,io_write_file_name,
+        gmt_create,gmt_modified
+    </sql>
+</mapper>

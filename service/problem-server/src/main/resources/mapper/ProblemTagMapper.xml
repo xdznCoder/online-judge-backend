@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.problem.infrastructure.dao.ProblemTagDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.problem.entity.po.ProblemTag">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="tid" column="tid" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,pid,tid,
+        gmt_create,gmt_modified
+    </sql>
+    <select id="selectByTagIds" resultType="java.lang.Integer">
+    select pid from problem_tag where tid in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+    </foreach>
+    </select>
+</mapper>
