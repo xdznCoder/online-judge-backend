@@ -11,6 +11,7 @@ import cn.xdzn.oj.service.problem.infrastructure.client.ProblemClient;
 import cn.xdzn.oj.service.problem.interfaces.dto.NewProblemDTO;
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,12 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
             @RequestParam(required = false, defaultValue = "-1") Integer type) {
         return Result.page(problemApplicationService.selectPage(pageNum, pageSize, key, tagIds, type));
     }
+
+    @GetMapping("/random")
+    @Operation(summary = "随机获取一题")
+    public Result<Problem> random() {
+        return Result.success();
+    }
     @Operation(summary = "获取最新题目10题")
     @GetMapping("/newProblem")
     public Result<NewProblemDTO> newProblem() {
@@ -97,8 +104,26 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
         return Result.success();
     }
 
+    @GetMapping("/submitList")
+    @Operation(summary = "获取题目提交列表")
+    public Result<PageInfo<Object>> codeList(
+            @RequestParam(required = false,defaultValue = "1") Long pageNum,
+            @RequestParam(required = false,defaultValue = "10")Long pageSize,
+            @RequestParam(required = false,defaultValue = "-1")Long uid,
+            @RequestParam(required = false,defaultValue = "") String key) {
+        return Result.success();
+    }
+    @GetMapping("/submitDetail")
+    @Operation(summary = "获取题目提交详情")
+    public Result<Object> codeDetail(Long sid) {
+        return Result.success();
+    }
 
-
+    @GetMapping("/getLastCode")
+    @Operation(summary = "获取题目最后一次代码")
+    public Result<Object> getProblemCode(Long pid, Long uid) {
+        return Result.success();
+    }
 
 
 }

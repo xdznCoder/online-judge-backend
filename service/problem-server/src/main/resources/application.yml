@@ -2,7 +2,7 @@ spring:
   application:
     name: problem-server
   datasource:
-    url: jdbc:mysql://localhost:3306/oj?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/newoj?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,7 +16,7 @@ spring:
       server-addr: localhost:8848
   data:
     redis:
-      host: localhost
+      host: 106.52.199.168
       port: 6379
       # 链接超时时间
       timeout: 10s

@@ -16,7 +16,7 @@ spring:
       server-addr: localhost:8848
   data:
     redis:
-      host: localhost
+      host: 106.52.199.168
       port: 6379
       # 链接超时时间
       timeout: 10s

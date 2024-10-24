@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.annotation.Resource;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -28,7 +29,7 @@ BaseController<S extends IService<E>, E extends BaseEntity,T extends ConverEntit
      * 服务
      */
     @Getter
-    @Resource
+    @Autowired
     protected S service;
 
     private final Class<E> entity;

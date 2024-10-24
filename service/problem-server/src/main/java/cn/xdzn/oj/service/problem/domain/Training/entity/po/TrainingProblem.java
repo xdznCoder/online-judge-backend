@@ -1,37 +1,48 @@
-package cn.xdzn.oj.service.problem.domain.tag.entity.po;
+package cn.xdzn.oj.service.problem.domain.Training.entity.po;
+
 import cn.xdzn.oj.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @TableName tag
+ * @TableName training_problem
  */
-@TableName(value ="tag")
+@TableName(value ="training_problem")
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-//new
-public class Tag extends BaseEntity implements Serializable {
-
+public class TrainingProblem extends BaseEntity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
-    @Schema(description = "id")
     private Long id;
 
-    private String name;
+    private Long tid;
 
-    private String color;
+    private Long pid;
 
-    @Schema(description = "团队id")
-    private Long gid;
+    private Integer rank;
+
+    private String displayId;
+
+    private Date gmtCreate;
+
+    private Date gmtModified;
+
+    private Long createBy;
+
+    private Long updateBy;
+
+    private Integer isDeleted;
 
     @Serial
     private static final long serialVersionUID = 1L;
+
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.problem.infrastructure.dao.TrainingRecordDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingRecord">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="tid" column="tid" jdbcType="BIGINT"/>
+            <result property="tpid" column="tpid" jdbcType="BIGINT"/>
+            <result property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="submitId" column="submit_id" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,tid,tpid,
+        pid,submit_id,gmt_create,
+        gmt_modified,create_by,update_by,
+        is_deleted
+    </sql>
+</mapper>

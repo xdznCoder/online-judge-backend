@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.problem.infrastructure.dao.TrainingDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.Training.entity.po.Training">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="auth" column="auth" jdbcType="VARCHAR"/>
+            <result property="privatePwd" column="private_pwd" jdbcType="VARCHAR"/>
+            <result property="rank" column="rank" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="isGroup" column="is_group" jdbcType="TINYINT"/>
+            <result property="gid" column="gid" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,description,
+        author,auth,private_pwd,
+        rank,status,is_group,
+        gid,gmt_create,gmt_modified,
+        create_by,update_by,is_deleted
+    </sql>
+</mapper>

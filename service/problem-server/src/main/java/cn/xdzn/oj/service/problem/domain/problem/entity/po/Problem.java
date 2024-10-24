@@ -88,9 +88,6 @@ public class Problem extends BaseEntity implements Serializable {
 
     private String ioWriteFileName;
 
-    private Date gmtCreate;
-
-    private Date gmtModified;
     @Serial
     private static final long serialVersionUID = 1L;
 }

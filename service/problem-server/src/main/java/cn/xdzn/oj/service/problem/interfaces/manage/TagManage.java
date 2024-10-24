@@ -9,6 +9,7 @@ import cn.xdzn.oj.service.problem.interfaces.dto.TagDTO;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @io.swagger.v3.oas.annotations.tags.Tag(name = "标签模块")
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("/problem/tag")
 @RequiredArgsConstructor
+//finish
 public class TagManage extends BaseController<TagDomainService, Tag, TagDTO, Long> {
 
     @Override
@@ -46,6 +48,7 @@ public class TagManage extends BaseController<TagDomainService, Tag, TagDTO, Lon
         return super.update(instance);
     }
     @GetMapping("/page")
+    @Operation(summary = "分页查询")
     public Result<PageInfo<Tag>> page(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,

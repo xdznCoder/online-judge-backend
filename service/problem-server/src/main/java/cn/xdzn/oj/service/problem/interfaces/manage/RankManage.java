@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name = "排名模块")
 @RestController
-@RequestMapping("/rank")
+@RequestMapping("/problem/rank")
 @RequiredArgsConstructor
 public class RankManage {
     @GetMapping("/acm")
