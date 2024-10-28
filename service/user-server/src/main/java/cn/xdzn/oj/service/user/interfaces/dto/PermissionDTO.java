@@ -2,7 +2,7 @@ package cn.xdzn.oj.service.user.interfaces.dto;
 
 
 import cn.xdzn.oj.common.entity.ConverEntity;
-import cn.xdzn.oj.service.user.domain.permission.model.po.Permission;
+import cn.xdzn.oj.service.user.domain.permission.entity.po.Permission;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

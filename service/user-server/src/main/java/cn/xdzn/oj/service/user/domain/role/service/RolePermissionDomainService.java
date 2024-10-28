@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.user.domain.role.service;
 
-import cn.xdzn.oj.service.user.domain.role.model.po.RolePermission;
+import cn.xdzn.oj.service.user.domain.role.entity.po.RolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

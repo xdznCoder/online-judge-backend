@@ -9,8 +9,8 @@ import cn.xdzn.oj.service.user.domain.permission.service.PermissionDomainService
 import cn.xdzn.oj.service.user.domain.role.service.RolePermissionDomainService;
 import cn.xdzn.oj.service.user.domain.permission.repository.PermissionRepository;
 import cn.xdzn.oj.service.user.infrastructure.dao.PermissionDao;
-import cn.xdzn.oj.service.user.domain.permission.model.po.Permission;
-import cn.xdzn.oj.service.user.domain.role.model.po.RolePermission;
+import cn.xdzn.oj.service.user.domain.permission.entity.po.Permission;
+import cn.xdzn.oj.service.user.domain.role.entity.po.RolePermission;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

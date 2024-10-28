@@ -1,13 +1,26 @@
 package cn.xdzn.oj.service.problem.interfaces.manage;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
+import cn.xdzn.oj.common.constants.CodeEnum;
 import cn.xdzn.oj.common.controller.BaseController;
+import cn.xdzn.oj.common.exception.CustomException;
+import cn.xdzn.oj.service.problem.ProblemApplication;
+import cn.xdzn.oj.service.problem.application.ProblemApplicationService;
+import cn.xdzn.oj.service.problem.application.TrainingApplicationService;
+import cn.xdzn.oj.service.problem.domain.Training.entity.po.Category;
 import cn.xdzn.oj.service.problem.domain.Training.entity.po.Training;
+import cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingRegister;
+import cn.xdzn.oj.service.problem.domain.Training.service.CategoryDomainService;
 import cn.xdzn.oj.service.problem.domain.Training.service.TrainingDomainService;
-import cn.xdzn.oj.service.problem.interfaces.dto.CategoryDTO;
-import cn.xdzn.oj.service.problem.interfaces.dto.ProblemDTO;
-import cn.xdzn.oj.service.problem.interfaces.dto.TrainingDTO;
+import cn.xdzn.oj.service.problem.domain.Training.service.TrainingRegisterDomainService;
+import cn.xdzn.oj.service.problem.interfaces.assembler.CategoryAssembler;
+import cn.xdzn.oj.service.problem.interfaces.assembler.TrainingAssembler;
+import cn.xdzn.oj.service.problem.interfaces.dto.*;
+import com.alibaba.cloud.commons.lang.StringUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +37,16 @@ import java.util.List;
 @RequestMapping("/problem/training")
 public class TrainingManage extends BaseController<TrainingDomainService, Training, TrainingDTO, Long> {
 
+    private final CategoryDomainService categoryDomainService;
+
+    private final TrainingApplicationService trainingApplicationService;
+
+    private final TrainingRegisterDomainService trainingRegisterDomainService;
+
+    private final ProblemApplicationService problemApplicationService;
+
     @Override
+    //创建就写入author
     public Result<Void> save(TrainingDTO instance) {
         return super.save(instance);
     }
@@ -45,43 +67,102 @@ public class TrainingManage extends BaseController<TrainingDomainService, Traini
     }
 
     @GetMapping("/page")
-    @Operation(summary = "分页查询")
-    //别忘了返回进度
-    public Result<PageInfo<TrainingDTO>> page(
+    @Operation(summary = "前台分页查询")
+    public Result<PageInfo<TrainingFrontDTO>> page(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,
             @RequestParam(required = false) String key,
             @RequestParam(required = false,defaultValue = "-1") int authId,
+            @RequestParam(required = false,defaultValue = "-1") int groupId,
             @RequestParam(required = false,defaultValue = "-1") Long categoryId
     ) {
-        return Result.success();
+       var page = service.lambdaQuery()
+               .select(Training::getId, Training::getTitle,Training::getGid, Training::getAuth, Training::getRank
+                       ,Training::getGmtModified, Training::getAuthor, Training::getCid)
+               .like(StringUtils.isNotBlank(key), Training::getTitle, key)
+               .eq(authId != -1, Training::getAuth, authId)
+               .eq(groupId != -1, Training::getGid, groupId)
+               .eq(Training::getStatus,1)
+               .eq(categoryId != -1, Training::getCid, categoryId)
+               .orderByAsc(Training::getRank)
+               .page(new Page<>(pageNum, pageSize))
+               .convert(TrainingAssembler::toFrontDTO);
+       page.setRecords(trainingApplicationService.fillTrainingInfo(page.getRecords()));
+       return Result.page(page);
     }
 
     @GetMapping("/category")
     @Operation(summary = "查询训练分类")
     //分类设置上限10个
     //考虑做成聚合
-    public Result<List<TrainingDTO>> category(
+    public Result<List<CategoryDTO>> category(
             @RequestParam(required = false,defaultValue = "-1") int groupId
     ) {
-        return Result.success();
+        return Result.success(categoryDomainService.lambdaQuery()
+                .select(Category::getId, Category::getName, Category::getColor, Category::getGid)
+                .eq(groupId != -1, Category::getGid, groupId)
+                .eq(Category::getIsDeleted, 0)
+                .list()
+                .stream()
+                .map(CategoryAssembler::toDTO)
+                .toList());
     }
 
     @PostMapping("/addCategory")
     @Operation(summary = "新增训练分类")
     public Result<Void> addCategory(@RequestBody CategoryDTO instance) {
+        categoryDomainService.save(instance.toPo(Category.class));
         return Result.success();
     }
-    @GetMapping("/detail")
-    @Operation(summary = "查询训练详情")
-    public Result<TrainingDTO> detail(Long id) {
+    @DeleteMapping("/deleteCategory/{id}")
+    @Operation(summary = "删除训练分类")
+    public Result<Void> deleteCategory(@PathVariable Long id) {
+       service.deleteCategory(id);
         return Result.success();
     }
+    @GetMapping("/detail/{id}/{auth}")
+    @Operation(summary = "查询训练详情(主要判断权限以及返回描述信息)")
+    public Result<TrainingDetailDTO> detail(@PathVariable Long id, @PathVariable Integer auth) {
+        String description = service.lambdaQuery().select(Training::getDescription).eq(Training::getId, id).eq(Training::getIsDeleted,0).one().getDescription();
+        TrainingDetailDTO trainingDetailDTO = new TrainingDetailDTO().setId(id).setDescription(description);
+        if(auth != null && auth == 1){
+            Long count = trainingRegisterDomainService
+                    .lambdaQuery()
+                    .eq(TrainingRegister::getTid, id)
+                    .eq(TrainingRegister::getUid, StpUtil.getLoginId())
+                    .eq(TrainingRegister::getIsDeleted, 0)
+                    .count();
+            trainingDetailDTO.setIsAuth(count > 0);
+        }
+        return Result.success(trainingDetailDTO);
+    }
+
+    @PostMapping("/verifyPassword")
+    public Result<Void> verifyPassword(@RequestBody TrainingPasswordDTO dto ) {
+        // 验证逻辑
+        trainingApplicationService.verifyPassword(dto);
+        return Result.success();
+    }
+
     @GetMapping("/problemList")
     @Operation(summary = "查询训练题目列表")
-    public Result<PageInfo<ProblemDTO>> problemList(Long id,
+    public Result<PageInfo<ProblemFrontDTO>> problemList(Long id,
     @RequestParam(required = false, defaultValue = "1") Long pageNum,
     @RequestParam(required = false, defaultValue = "10") Long pageSize) {
+        IPage<ProblemFrontDTO> problemPage = trainingApplicationService.problemList(id, pageNum, pageSize);
+        problemPage.setRecords(problemApplicationService.fillProblemInfo(problemPage.getRecords()));
+        return Result.page(problemPage);
+    }
+    @PostMapping("/addProblem")
+    @Operation(summary = "添加题目")
+    public Result<Void> addProblem(Long tid, Long pid,String displayId) {
+        service.addProblem(tid, pid, displayId);
+        return Result.success();
+    }
+    @DeleteMapping("/deleteProblem/{id}")
+    @Operation(summary = "移除题目")
+    public Result<Void> deleteProblem(@PathVariable Long id) {
+        service.deleteProblem(id);
         return Result.success();
     }
 

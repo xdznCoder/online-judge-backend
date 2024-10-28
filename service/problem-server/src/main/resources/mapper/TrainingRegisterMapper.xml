@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingRegister">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="tid" column="tid" jdbcType="BIGINT"/>
-            <result property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="uid" column="uid" jdbcType="BIGINT"/>
             <result property="status" column="status" jdbcType="TINYINT"/>
             <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
             <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>

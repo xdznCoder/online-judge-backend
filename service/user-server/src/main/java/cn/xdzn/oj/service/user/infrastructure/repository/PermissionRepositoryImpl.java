@@ -2,7 +2,7 @@ package cn.xdzn.oj.service.user.infrastructure.repository;
 
 import cn.xdzn.oj.service.user.domain.permission.repository.PermissionRepository;
 import cn.xdzn.oj.service.user.infrastructure.dao.PermissionDao;
-import cn.xdzn.oj.service.user.domain.permission.model.po.Permission;
+import cn.xdzn.oj.service.user.domain.permission.entity.po.Permission;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 

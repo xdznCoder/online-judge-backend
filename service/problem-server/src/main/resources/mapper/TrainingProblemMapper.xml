@@ -23,4 +23,15 @@
         gmt_modified,create_by,update_by,
         is_deleted
     </sql>
+    <insert id="addProblem">
+        insert into training_problem (tid,pid,display_id)
+        values (#{tid},#{pid},#{displayId})
+    </insert>
+    <select id="getProblemNum" resultType="cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingNumVO">
+        select tid,count(pid) as problemNum from training_problem group by tid
+    </select>
+    <select id="getProblemIds" resultType="java.lang.Integer">
+        select pid from training_problem where tid = #{tid} and is_deleted = 0 order by rank
+    </select>
+
 </mapper>

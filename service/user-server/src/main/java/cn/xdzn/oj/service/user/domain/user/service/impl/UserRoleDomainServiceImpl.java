@@ -2,7 +2,7 @@ package cn.xdzn.oj.service.user.domain.user.service.impl;
 
 import cn.xdzn.oj.service.user.domain.user.service.UserRoleDomainService;
 import cn.xdzn.oj.service.user.infrastructure.dao.UserRoleDao;
-import cn.xdzn.oj.service.user.domain.user.model.po.UserRole;
+import cn.xdzn.oj.service.user.domain.user.entity.po.UserRole;
 import cn.xdzn.oj.service.user.domain.user.repository.UserRoleRepository;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

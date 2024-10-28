@@ -14,15 +14,18 @@ import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.PasswordDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
-import cn.xdzn.oj.service.user.domain.user.model.vo.UserVO;
-import cn.xdzn.oj.service.user.infrastructure.feign.UserClient;
-import cn.xdzn.oj.service.user.domain.user.model.po.User;
+import cn.xdzn.oj.service.user.domain.user.entity.vo.UserVO;
+import cn.xdzn.oj.common.client.UserClient;
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理
@@ -160,6 +163,19 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
         }
         return Result.isSuccess(service.updateById(user));
     }
+
+    //查看个人ac题目数量(报表)
+    @Override
+    public Map<Integer,Integer> getTrainingAcNum(List<Long> list){
+        return service.acNum(list);
+    }
+
+    @Override
+    public List<Long> getUserAc() {
+        Long uid = StpUtil.getLoginIdAsLong();
+        return service.getUserAc(uid);
+    }
+
     @Override
     protected Class<User> createInstance() {
         return User.class;

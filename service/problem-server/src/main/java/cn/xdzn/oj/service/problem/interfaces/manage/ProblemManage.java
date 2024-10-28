@@ -3,15 +3,14 @@ package cn.xdzn.oj.service.problem.interfaces.manage;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
+import cn.xdzn.oj.common.client.ProblemClient;
 import cn.xdzn.oj.common.controller.BaseController;
-import cn.xdzn.oj.service.problem.application.service.ProblemApplicationService;
+import cn.xdzn.oj.service.problem.application.ProblemApplicationService;
 import cn.xdzn.oj.service.problem.domain.problem.service.ProblemDomainService;
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.Problem;
-import cn.xdzn.oj.service.problem.infrastructure.client.ProblemClient;
 import cn.xdzn.oj.service.problem.interfaces.dto.NewProblemDTO;
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -122,6 +121,12 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
     @GetMapping("/getLastCode")
     @Operation(summary = "获取题目最后一次代码")
     public Result<Object> getProblemCode(Long pid, Long uid) {
+        return Result.success();
+    }
+
+    @GetMapping("/addList")
+    @Operation(description = "后台添加题目时列表")
+    public Result<Object> addList() {
         return Result.success();
     }
 

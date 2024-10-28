@@ -1,7 +1,7 @@
 package cn.xdzn.oj.service.user.infrastructure.common;
 
 
-import cn.xdzn.oj.service.user.domain.permission.model.po.Permission;
+import cn.xdzn.oj.service.user.domain.permission.entity.po.Permission;
 
 import java.util.ArrayList;
 import java.util.List;

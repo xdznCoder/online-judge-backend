@@ -3,8 +3,11 @@ package cn.xdzn.oj.service.user.domain.user.service;
 import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
-import cn.xdzn.oj.service.user.domain.user.model.po.User;
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户服务
@@ -79,4 +82,9 @@ public interface UserDomainService extends IService<User> {
      * @return {@link UserInfo }
      */
     UserInfo getUserInfo();
+
+    Map<Integer,Integer> acNum(List<Long> list);
+
+
+    List<Long> getUserAc(Long uid);
 }

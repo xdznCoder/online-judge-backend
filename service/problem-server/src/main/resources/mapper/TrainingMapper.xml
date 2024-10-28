@@ -9,7 +9,7 @@
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="author" column="author" jdbcType="VARCHAR"/>
-            <result property="auth" column="auth" jdbcType="VARCHAR"/>
+            <result property="auth" column="auth" jdbcType="TINYINT"/>
             <result property="privatePwd" column="private_pwd" jdbcType="VARCHAR"/>
             <result property="rank" column="rank" jdbcType="INTEGER"/>
             <result property="status" column="status" jdbcType="TINYINT"/>
@@ -20,6 +20,7 @@
             <result property="createBy" column="create_by" jdbcType="BIGINT"/>
             <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
             <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="cid" column="cid" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -29,4 +30,7 @@
         gid,gmt_create,gmt_modified,
         create_by,update_by,is_deleted
     </sql>
+    <select id="getProblemNum" resultType="java.lang.Integer">
+        select count(*) from training_problem where tid=#{id}
+    </select>
 </mapper>

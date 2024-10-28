@@ -5,7 +5,7 @@ import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.service.user.domain.permission.service.PermissionDomainService;
 import cn.xdzn.oj.service.user.infrastructure.common.AuthUtils;
 import cn.xdzn.oj.service.user.interfaces.dto.PermissionDTO;
-import cn.xdzn.oj.service.user.domain.permission.model.po.Permission;
+import cn.xdzn.oj.service.user.domain.permission.entity.po.Permission;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;

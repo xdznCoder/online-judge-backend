@@ -9,20 +9,23 @@ import cn.xdzn.oj.common.util.PasswordUtils;
 import cn.xdzn.oj.common.util.RedisUtil;
 import cn.xdzn.oj.common.util.ValidateCodeUtils;
 import cn.xdzn.oj.service.user.domain.role.service.RoleDomainService;
+import cn.xdzn.oj.service.user.domain.user.repository.UserAcProblemRepository;
 import cn.xdzn.oj.service.user.domain.user.service.UserRoleDomainService;
 import cn.xdzn.oj.service.user.domain.user.service.UserDomainService;
 import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
 import cn.xdzn.oj.service.user.infrastructure.dao.UserDao;
-import cn.xdzn.oj.service.user.domain.user.model.po.User;
-import cn.xdzn.oj.service.user.domain.user.model.po.UserRole;
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
+import cn.xdzn.oj.service.user.domain.user.entity.po.UserRole;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户服务实现类
@@ -33,8 +36,12 @@ import java.util.List;
  * @date 2024/03/08
  */
 @Service
+@RequiredArgsConstructor
 public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
         implements UserDomainService {
+
+    private final UserAcProblemRepository userAcProblemRepository;
+
 
     @Resource
     private RedisUtil redisUtil;
@@ -128,6 +135,16 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
                 .setRoleNames(roleNames)
                 .setId(id)
                 .setAvatar(user.getAvatar());
+    }
+
+    @Override
+    public Map<Integer,Integer> acNum(List<Long> list) {
+        return userAcProblemRepository.acNum(list);
+    }
+
+    @Override
+    public List<Long> getUserAc(Long uid) {
+        return userAcProblemRepository.getUserAc(uid);
     }
 
     /**

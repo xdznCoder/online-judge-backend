@@ -5,7 +5,7 @@ import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.service.user.domain.role.service.RoleDomainService;
 import cn.xdzn.oj.service.user.interfaces.dto.RoleDTO;
-import cn.xdzn.oj.service.user.domain.role.model.po.Role;
+import cn.xdzn.oj.service.user.domain.role.entity.po.Role;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

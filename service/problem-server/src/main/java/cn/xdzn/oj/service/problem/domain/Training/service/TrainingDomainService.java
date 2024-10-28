@@ -1,7 +1,12 @@
 package cn.xdzn.oj.service.problem.domain.Training.service;
 
 import cn.xdzn.oj.service.problem.domain.Training.entity.po.Training;
+import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingCategoryVO;
+import cn.xdzn.oj.service.problem.interfaces.dto.TrainingFrontDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author Shelly6
@@ -10,4 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TrainingDomainService extends IService<Training> {
 
+    List<TrainingFrontDTO> fill(List<TrainingFrontDTO> records, Map<Long, Integer> problemNumMap, Map<Integer, TrainingCategoryVO> categoryMap, Map<Integer, Integer> acNums);
+
+    void deleteCategory(Long id);
+
+    void addProblem(Long tid, Long pid,String displayId);
+
+    void deleteProblem(Long id);
 }

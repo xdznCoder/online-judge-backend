@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.user.domain.user.service;
 
-import cn.xdzn.oj.service.user.domain.user.model.po.UserRole;
+import cn.xdzn.oj.service.user.domain.user.entity.po.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

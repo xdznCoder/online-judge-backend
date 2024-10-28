@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.user.infrastructure.dao.UserAcproblemDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.user.domain.user.entity.po.UserAcproblem">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="submitId" column="submit_id" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="tid" column="tid" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,uid,pid,
+        submit_id,gmt_create,gmt_modified,
+        create_by,update_by,is_deleted
+    </sql>
+    <select id="getAcNum" resultType="java.util.Map">
+        SELECT
+        tid AS key,
+        COUNT(*) AS value
+        FROM
+        user_acproblem
+        WHERE
+        uid = #{userId}
+        AND is_deleted = 0
+        AND tid IN
+        <foreach item="tid" collection="tidList" open="(" separator="," close=")">
+            #{tid}
+        </foreach>
+        GROUP BY
+        tid
+    </select>
+    <select id="getUserAc" resultType="java.lang.Long">
+        SELECT
+        pid
+        FROM
+        user_acproblem
+        WHERE
+        uid = #{uid}
+        AND is_deleted = 0
+    </select>
+</mapper>

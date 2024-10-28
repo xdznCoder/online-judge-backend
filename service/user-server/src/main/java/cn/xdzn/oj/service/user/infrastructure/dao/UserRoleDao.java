@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.user.infrastructure.dao;
 
-import cn.xdzn.oj.service.user.domain.user.model.po.UserRole;
+import cn.xdzn.oj.service.user.domain.user.entity.po.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;

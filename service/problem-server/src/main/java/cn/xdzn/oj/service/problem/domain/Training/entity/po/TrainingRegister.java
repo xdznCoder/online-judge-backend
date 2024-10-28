@@ -26,19 +26,9 @@ public class TrainingRegister extends BaseEntity implements Serializable {
 
     private Long tid;
 
-    private String uid;
+    private Long uid;
 
     private Integer status;
-
-    private Date gmtCreate;
-
-    private Date gmtModified;
-
-    private Long createBy;
-
-    private Long updateBy;
-
-    private Integer isDeleted;
     @Serial
     private static final long serialVersionUID = 1L;
 }

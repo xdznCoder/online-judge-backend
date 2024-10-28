@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 //new
 public class Training extends BaseEntity implements Serializable {
+
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -31,11 +33,13 @@ public class Training extends BaseEntity implements Serializable {
 
     private String author;
 
-    private String auth;
+    private Integer auth;
 
     private String privatePwd;
 
     private Integer rank;
+
+    private Integer cid;
 
     private Integer status;
 
@@ -45,4 +49,5 @@ public class Training extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
 }

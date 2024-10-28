@@ -2,7 +2,7 @@ package cn.xdzn.oj.service.user.infrastructure.repository;
 
 import cn.xdzn.oj.service.user.domain.role.repository.RolePermissionRepository;
 import cn.xdzn.oj.service.user.infrastructure.dao.RolePermissionDao;
-import cn.xdzn.oj.service.user.domain.role.model.po.RolePermission;
+import cn.xdzn.oj.service.user.domain.role.entity.po.RolePermission;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;

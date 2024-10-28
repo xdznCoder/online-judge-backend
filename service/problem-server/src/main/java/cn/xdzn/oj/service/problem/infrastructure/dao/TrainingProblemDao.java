@@ -1,8 +1,12 @@
 package cn.xdzn.oj.service.problem.infrastructure.dao;
 
 import cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingProblem;
+import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingCategoryVO;
+import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingNumVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author Shelly6
@@ -13,6 +17,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TrainingProblemDao extends BaseMapper<TrainingProblem> {
 
+    List<TrainingNumVO> getProblemNum(List<Long> list);
+
+    List<Integer> getProblemIds(Long id);
+
+    void addProblem(Long tid, Long pid,String displayId);
 }
 
 
