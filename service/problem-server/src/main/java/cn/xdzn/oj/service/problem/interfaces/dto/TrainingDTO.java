@@ -1,13 +1,11 @@
 package cn.xdzn.oj.service.problem.interfaces.dto;
 
 import cn.xdzn.oj.common.entity.ConverEntity;
-import cn.xdzn.oj.service.problem.domain.Training.entity.po.Training;
+import cn.xdzn.oj.service.problem.domain.training.entity.po.Training;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 @Data
 @Accessors(chain = true)

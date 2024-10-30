@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.user.infrastructure.dao.DiscussionDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.user.domain.discussion.entity.po.Discussion">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="discussionType" column="discussion_type" jdbcType="TINYINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="pid" column="pid" jdbcType="VARCHAR"/>
+            <result property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="role" column="role" jdbcType="VARCHAR"/>
+            <result property="viewNum" column="view_num" jdbcType="INTEGER"/>
+            <result property="likeNum" column="like_num" jdbcType="INTEGER"/>
+            <result property="topPriority" column="top_priority" jdbcType="TINYINT"/>
+            <result property="commentNum" column="comment_num" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="gid" column="gid" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,discussion_type,title,
+        description,content,pid,
+        uid,author,avatar,
+        role,view_num,like_num,
+        top_priority,comment_num,status,
+        gid,gmt_create,gmt_modified,
+        create_by,update_by,is_deleted
+    </sql>
+</mapper>

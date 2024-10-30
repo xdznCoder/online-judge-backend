@@ -1,5 +1,6 @@
 package cn.xdzn.oj.service.problem.infrastructure.repository;
 
+import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemTagVO;
 import cn.xdzn.oj.service.problem.domain.problem.repository.ProblemTagRepository;
 import cn.xdzn.oj.service.problem.infrastructure.dao.ProblemTagDao;
 import lombok.RequiredArgsConstructor;
@@ -15,5 +16,10 @@ public class ProblemTagRepositoryImpl implements ProblemTagRepository {
     @Override
     public List<Integer> findProblemsByTagIds(List<Integer> tagIds) {
         return problemTagMapper.selectByTagIds(tagIds);
+    }
+
+    @Override
+    public List<ProblemTagVO> findTagsByProblemIds(List<Long> ids) {
+        return problemTagMapper.findTagsByProblemIds(ids);
     }
 }

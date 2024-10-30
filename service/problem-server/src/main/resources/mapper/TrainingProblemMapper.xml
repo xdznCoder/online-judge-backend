@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xdzn.oj.service.problem.infrastructure.dao.TrainingProblemDao">
 
-    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingProblem">
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.problem.domain.training.entity.po.TrainingProblem">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="tid" column="tid" jdbcType="BIGINT"/>
             <result property="pid" column="pid" jdbcType="BIGINT"/>
@@ -27,7 +27,7 @@
         insert into training_problem (tid,pid,display_id)
         values (#{tid},#{pid},#{displayId})
     </insert>
-    <select id="getProblemNum" resultType="cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingNumVO">
+    <select id="getProblemNum" resultType="cn.xdzn.oj.service.problem.domain.training.entity.vo.TrainingNumVO">
         select tid,count(pid) as problemNum from training_problem group by tid
     </select>
     <select id="getProblemIds" resultType="java.lang.Integer">

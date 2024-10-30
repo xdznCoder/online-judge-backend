@@ -177,6 +177,11 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
     }
 
     @Override
+    public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
+        return service.getProblemAcNum(ids);
+    }
+
+    @Override
     protected Class<User> createInstance() {
         return User.class;
     }

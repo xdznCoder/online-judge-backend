@@ -33,4 +33,9 @@ public class UserAcProblemRepositoryImpl implements UserAcProblemRepository {
     public List<Long> getUserAc(Long uid) {
         return userAcProblemDao.getUserAc(uid);
     }
+
+    @Override
+    public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
+        return userAcProblemDao.getProblemAcNum(ids);
+    }
 }

@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.problem.interfaces.assembler;
 
-import cn.xdzn.oj.service.problem.domain.Training.entity.po.Category;
+import cn.xdzn.oj.service.problem.domain.training.entity.po.Category;
 import cn.xdzn.oj.service.problem.interfaces.dto.CategoryDTO;
 
 public class CategoryAssembler {

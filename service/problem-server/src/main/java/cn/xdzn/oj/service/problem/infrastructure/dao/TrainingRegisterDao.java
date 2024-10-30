@@ -1,6 +1,6 @@
 package cn.xdzn.oj.service.problem.infrastructure.dao;
 
-import cn.xdzn.oj.service.problem.domain.Training.entity.po.TrainingRegister;
+import cn.xdzn.oj.service.problem.domain.training.entity.po.TrainingRegister;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

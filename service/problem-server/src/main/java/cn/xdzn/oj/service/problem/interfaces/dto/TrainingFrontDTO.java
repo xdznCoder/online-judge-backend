@@ -1,8 +1,8 @@
 package cn.xdzn.oj.service.problem.interfaces.dto;
 
 import cn.xdzn.oj.common.entity.ConverEntity;
-import cn.xdzn.oj.service.problem.domain.Training.entity.po.Training;
-import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingCategoryVO;
+import cn.xdzn.oj.service.problem.domain.training.entity.po.Training;
+import cn.xdzn.oj.service.problem.domain.training.entity.vo.TrainingCategoryVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

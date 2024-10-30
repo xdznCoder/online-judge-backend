@@ -47,4 +47,19 @@
         uid = #{uid}
         AND is_deleted = 0
     </select>
+    <select id="getProblemAcNum" resultType="java.util.Map">
+        SELECT
+        pid AS key,
+        COUNT(*) AS value
+        FROM
+        user_acproblem
+        WHERE
+        pid IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND is_deleted = 0
+        GROUP BY
+        pid
+    </select>
 </mapper>

@@ -20,4 +20,6 @@ public interface UserAcproblemDao extends BaseMapper<UserAcproblem> {
     Map<Integer, Integer> getAcNum(Long userId, List<Long> tidList);
 
     List<Long> getUserAc(Long uid);
+    @MapKey("key")
+    Map<Long, Integer> getProblemAcNum(List<Long> ids);
 }

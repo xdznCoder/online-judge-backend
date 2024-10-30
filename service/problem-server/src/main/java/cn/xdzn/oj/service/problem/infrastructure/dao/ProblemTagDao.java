@@ -1,8 +1,11 @@
 package cn.xdzn.oj.service.problem.infrastructure.dao;
 
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.ProblemTag;
+import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemTagVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -15,6 +18,14 @@ import java.util.List;
 @Mapper
 public interface ProblemTagDao extends BaseMapper<ProblemTag> {
     List<Integer> selectByTagIds(List<Integer> tagIds);
+
+    @Select("SELECT pt.pid AS pid, t.name AS tagName " +
+            "FROM problem_tag pt " +
+            "JOIN tag t ON pt.tid = t.id " +
+            "WHERE pt.pid IN #{problemIds} " +
+            "AND pt.is_deleted = 0 " +
+            "AND t.is_deleted = 0")
+    List<ProblemTagVO> findTagsByProblemIds(@Param("problemIds") List<Long> problemIds);
 }
 
 

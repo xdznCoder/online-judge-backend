@@ -13,8 +13,10 @@ import java.util.Map;
  */
 @FeignClient("user-server")
 public interface UserClient {
-    @GetMapping("/training/acNum")
+    @GetMapping("/user/training/acNum")
     Map<Integer,Integer> getTrainingAcNum(List<Long> list);
     @GetMapping("/user/ac")
     List<Long> getUserAc();
+    @GetMapping("/user/training/problemAcNum")
+    Map<Long, Integer> getProblemAcNum(List<Long> ids);
 }

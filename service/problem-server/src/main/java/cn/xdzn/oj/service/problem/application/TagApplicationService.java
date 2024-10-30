@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TagApplicationService {
-    private final TagDomainService tagDomainService;
+
 }

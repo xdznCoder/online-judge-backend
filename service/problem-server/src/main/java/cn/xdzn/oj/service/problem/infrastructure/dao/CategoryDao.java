@@ -1,7 +1,7 @@
 package cn.xdzn.oj.service.problem.infrastructure.dao;
 
-import cn.xdzn.oj.service.problem.domain.Training.entity.po.Category;
-import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingCategoryVO;
+import cn.xdzn.oj.service.problem.domain.training.entity.po.Category;
+import cn.xdzn.oj.service.problem.domain.training.entity.vo.TrainingCategoryVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

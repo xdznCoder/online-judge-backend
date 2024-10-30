@@ -147,6 +147,11 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
         return userAcProblemRepository.getUserAc(uid);
     }
 
+    @Override
+    public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
+        return userAcProblemRepository.getProblemAcNum(ids);
+    }
+
     /**
      * 通过电子邮件获取用户
      *

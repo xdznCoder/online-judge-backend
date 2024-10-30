@@ -1,7 +1,7 @@
 package cn.xdzn.oj.service.problem.infrastructure.repository;
 
-import cn.xdzn.oj.service.problem.domain.Training.entity.vo.TrainingNumVO;
-import cn.xdzn.oj.service.problem.domain.Training.repository.TrainingProblemRepository;
+import cn.xdzn.oj.service.problem.domain.training.entity.vo.TrainingNumVO;
+import cn.xdzn.oj.service.problem.domain.training.repository.TrainingProblemRepository;
 import cn.xdzn.oj.service.problem.infrastructure.dao.TrainingProblemDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

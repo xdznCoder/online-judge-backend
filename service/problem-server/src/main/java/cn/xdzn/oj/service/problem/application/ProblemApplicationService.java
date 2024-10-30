@@ -5,9 +5,9 @@ import cn.xdzn.oj.common.client.UserClient;
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.Problem;
 
 import cn.xdzn.oj.service.problem.domain.problem.service.ProblemDomainService;
+import cn.xdzn.oj.service.problem.domain.problem.service.ProblemTagDomainService;
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemFrontDTO;
 import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemSubmitNumVO;
-import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemAcNumVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class ProblemApplicationService {
 
     private final ProblemDomainService problemDomainService;
+    private final ProblemTagDomainService problemTagDomainService;
     private final UserClient userClient;
 
     public IPage<Problem> selectPage(Long pageNum, Long pageSize, String key, List<Integer> tagIds, Integer type) {
@@ -33,25 +34,23 @@ public class ProblemApplicationService {
     }
 
     public List<ProblemFrontDTO> fillProblemInfo(List<ProblemFrontDTO> records) {
+        // 获取题目id
         List<Long> ids = records.stream().map(ProblemFrontDTO::getId).toList();
 
 //        // 获取每个问题的提交数量
 //        Map<Long, Integer> submitNumMap = problemRepository.getSubmitNum(ids)
 //                .stream().collect(Collectors.toMap(ProblemSubmitNumVO::getId, ProblemSubmitNumVO::getSubmitNum));
-//
-//        // 获取每个问题的接受数量
-//        Map<Long, Integer> acNumMap = userClient.getProblemAcNum(ids)
-//                .stream().collect(Collectors.toMap(ProblemAcNumVO::getId, ProblemAcNumVO::getAcNum));
-//
-//        // 获取每个问题的标签名称
-//        Map<Long, List<String>> tagNamesMap = problemTagRepository.getTagNames(ids)
-//                .stream().collect(Collectors.toMap(ProblemTagVO::getProblemId, ProblemTagVO::getTagNames));
-//
-//        //查找当前用户AC题目列表
-//        List<Long> acList = userClient.getUserAc();
-//
-//        // 填充问题信息
-//        return problemDomainService.fill(records, submitNumMap, acNumMap, tagNamesMap, acList);
-        return null;
+
+        // 获取每个问题的接受数量
+        Map<Long, Integer> acNumMap = userClient.getProblemAcNum(ids);
+
+        // 获取每个问题的标签名称
+        Map<Long, List<String>> tagNamesMap = problemTagDomainService.getListTagNames(ids);
+
+        //查找当前用户AC题目列表
+        List<Long> acList = userClient.getUserAc();
+
+        // 填充问题信息
+        return problemDomainService.fill(records, null, acNumMap, tagNamesMap, acList);
     }
 }

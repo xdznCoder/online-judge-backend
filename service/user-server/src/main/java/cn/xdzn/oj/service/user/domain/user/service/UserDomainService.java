@@ -87,4 +87,6 @@ public interface UserDomainService extends IService<User> {
 
 
     List<Long> getUserAc(Long uid);
+
+    Map<Long, Integer> getProblemAcNum(List<Long> ids);
 }

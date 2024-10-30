@@ -13,4 +13,6 @@ public interface UserAcProblemRepository {
     Map<Integer,Integer> acNum(List<Long> list);
 
    List<Long> getUserAc(Long uid);
+
+    Map<Long, Integer> getProblemAcNum(List<Long> ids);
 }
