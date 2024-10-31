@@ -125,7 +125,7 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
     }
 
     @GetMapping("/addList")
-    @Operation(description = "后台添加题目时列表")
+    @Operation(summary = "后台添加题目列表展示")
     public Result<Object> addList() {
         return Result.success();
     }

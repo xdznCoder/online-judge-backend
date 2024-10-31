@@ -3,6 +3,7 @@ package cn.xdzn.oj.service.user.domain.discussion.service.impl;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionComment;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionCommentDomainService;
 import cn.xdzn.oj.service.user.infrastructure.dao.DiscussionCommentDao;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Service;
 public class DiscussionCommentDomainServiceImpl extends ServiceImpl<DiscussionCommentDao, DiscussionComment>
     implements DiscussionCommentDomainService {
 
+    @Override
+    public Boolean deleteCommentByDiscussionId(Long id) {
+        return remove(new LambdaQueryWrapper<DiscussionComment>().eq(DiscussionComment::getDid,id));
+    }
 }
 
 

@@ -10,6 +10,7 @@ import cn.xdzn.oj.service.problem.interfaces.dto.ProblemFrontDTO;
 import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemSubmitNumVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ProblemApplicationService {
 
     private final ProblemDomainService problemDomainService;
     private final ProblemTagDomainService problemTagDomainService;
+    @Lazy
     private final UserClient userClient;
 
     public IPage<Problem> selectPage(Long pageNum, Long pageSize, String key, List<Integer> tagIds, Integer type) {

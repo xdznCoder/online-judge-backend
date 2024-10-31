@@ -3,6 +3,7 @@ package cn.xdzn.oj.service.user.interfaces.manage;
 import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.controller.BaseController;
+import cn.xdzn.oj.service.user.application.DiscussionApplicationService;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.Discussion;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionComment;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionReport;
@@ -34,6 +35,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
 
     private final DiscussionReportDomainService reportService;
     private final DiscussionCommentDomainService commentService;
+    private final DiscussionApplicationService applicationService;
     @Override
     public Result<Void> save(DiscussionDTO instance) {
         return super.save(instance);
@@ -41,6 +43,8 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
 
     @Override
     public Result<Void> delete(Long id) {
+        service.removeById(id);
+        commentService.deleteCommentByDiscussionId(id);
         return super.delete(id);
     }
 
@@ -54,7 +58,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
         return super.update(instance);
     }
     @GetMapping("/frontPage")
-    @Operation(description = "前台分页查询")
+    @Operation(summary = "前台分页查询")
     public Result<PageInfo<DiscussionDTO>> frontPage(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,
@@ -85,7 +89,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
                 .convert(DiscussionAssembler::toDTO));
     }
     @GetMapping("/backPage")
-    @Operation(description = "后台分页查询")
+    @Operation(summary = "后台分页查询")
     public Result<PageInfo<DiscussionBackDTO>> backPage(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,
@@ -109,19 +113,18 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     }
 
     @GetMapping("/detail/{id}")
-    @Operation(description = "获取讨论详情")
+    @Operation(summary = "获取讨论详情")
     public Result<Discussion> detail(@PathVariable Long id) {
         service.checkAndUpdate(id);
-        service.lambdaUpdate().setSql("view_num = view_num + 1").eq(Discussion::getId,id).update();
         return Result.success(service.getById(id));
     }
     @PostMapping("/createDiscussion")
-    @Operation(description = "创建讨论")
+    @Operation(summary = "创建讨论")
     public Result<Void> create(@RequestBody Discussion po) {
         return Result.isSuccess(service.save(po));
     }
     @PostMapping("/updateDiscussion")
-    @Operation(description = "编辑讨论")
+    @Operation(summary = "编辑讨论")
     public Result<Void> update(@RequestBody Discussion po) {
         Long count = service.lambdaQuery().eq(Discussion::getId, po.getId()).count();
         if (count == 0) {
@@ -130,35 +133,36 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
         return Result.isSuccess(service.updateById(po));
     }
     @DeleteMapping("/deleteDiscussion/{id}")
-    @Operation(description = "删除讨论")
+    @Operation(summary = "删除讨论")
     public Result<Void> deleteDiscussion(@PathVariable Long id) {
         Long count = service.lambdaQuery().eq(Discussion::getId, id).count();
         if (count == 0) {
             return Result.fail("该讨论不存在");
         }
-        return Result.isSuccess(service.removeById(id));
+        Boolean isSuccess = service.removeById(id);
+        Boolean isSuccess2 = commentService.deleteCommentByDiscussionId(id);
+        return Result.isSuccess(isSuccess && isSuccess2);
     }
     @GetMapping("/goToProblem")
-    @Operation(description = "前往题目")
+    @Operation(summary = "前往题目")
     public Result<Void> goToProblem(@RequestParam Long pid) {
-        //rpc
+        applicationService.goToProblem(pid);
         return Result.success();
     }
     @PostMapping("/like")
-    @Operation(description = "点赞")
+    @Operation(summary = "点赞")
     public Result<Void> like(@RequestBody Long id) {
         return Result.success();
     }
 
     @PostMapping("/report")
-    @Operation(description = "举报")
+    @Operation(summary = "举报")
     public Result<Void> report(@RequestBody DiscussionReportDTO report) {
-        report.setStatus(0);
         return Result.isSuccess(reportService.save(report.toPo(DiscussionReport.class)));
     }
 
     @PostMapping("/dealReport/{id}/{status}")
-    @Operation(description = "处理举报")
+    @Operation(summary = "处理举报")
     public Result<Void> dealReport(@PathVariable Long id,@PathVariable Integer status) {
         DiscussionReport report = reportService.getById(id);
         if (report == null) {
@@ -170,7 +174,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     }
 
     @GetMapping("/reportList")
-    @Operation(description = "举报列表")
+    @Operation(summary = "举报列表")
     public Result<PageInfo<DiscussionReport>> reportList(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize
@@ -180,7 +184,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
         );
     }
     @PostMapping("/comment")
-    @Operation(description = "评论")
+    @Operation(summary=  "评论")
     public Result<Void> comment(@RequestBody DiscussionComment comment) {
         comment.setStatus(0);
         return Result.success();

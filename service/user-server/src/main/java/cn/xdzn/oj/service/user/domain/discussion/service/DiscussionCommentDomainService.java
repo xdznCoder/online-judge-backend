@@ -10,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DiscussionCommentDomainService extends IService<DiscussionComment> {
 
+    Boolean deleteCommentByDiscussionId(Long id);
 }

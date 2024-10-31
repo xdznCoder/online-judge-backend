@@ -2,9 +2,9 @@ spring:
   application:
     name: problem-server
   datasource:
-    url: jdbc:mysql://localhost:3306/newoj?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://106.52.199.168:3306/newoj?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: 123456
+    password: kz32330981
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -12,8 +12,10 @@ spring:
       max-file-size: 20MB
       max-request-size: 20MB
   cloud:
+    loadbalancer:
+      enabled: true
     nacos:
-      server-addr: localhost:8848
+      server-addr: 106.52.199.168:8848
   data:
     redis:
       host: 106.52.199.168

@@ -106,6 +106,7 @@ project(":common") {
         api 'io.springfox:springfox-boot-starter'
         api 'com.baomidou:mybatis-plus-spring-boot3-starter'
         api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
         implementation 'org.springframework.boot:spring-boot-starter-mail'
         api 'org.springframework.boot:spring-boot-starter-web'
         api 'org.springframework.boot:spring-boot-starter-data-redis'

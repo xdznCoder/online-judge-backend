@@ -166,17 +166,20 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
 
     //查看个人ac题目数量(报表)
     @Override
+    @Operation(summary = "获取用户所有训练AC数量")
     public Map<Integer,Integer> getTrainingAcNum(List<Long> list){
         return service.acNum(list);
     }
 
     @Override
+    @Operation(summary = "获取用户AC题目")
     public List<Long> getUserAc() {
         Long uid = StpUtil.getLoginIdAsLong();
         return service.getUserAc(uid);
     }
 
     @Override
+    @Operation(summary = "获取题目AC数量")
     public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
         return service.getProblemAcNum(ids);
     }

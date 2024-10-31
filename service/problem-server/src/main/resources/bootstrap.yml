@@ -1,15 +1,14 @@
 spring:
   main:
     allow-bean-definition-overriding: true
-    allow-circular-references: true
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 106.52.199.168:8848
         namespace: oj
       config:
-        server-addr: localhost:8848
+        server-addr: 106.52.199.168:8848
         namespace: oj
         group: oj
-        prefix: problem-server
+        prefix: gateway-server
         file-extension: yaml

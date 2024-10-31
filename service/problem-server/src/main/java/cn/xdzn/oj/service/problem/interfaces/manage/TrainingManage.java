@@ -135,8 +135,10 @@ public class TrainingManage extends BaseController<TrainingDomainService, Traini
     }
 
     @PostMapping("/verifyPassword")
+    @Operation(summary = "验证训练密码")
     public Result<Void> verifyPassword(@RequestBody TrainingPasswordDTO dto ) {
         // 验证逻辑
+        //TODO 加入pass表待完成
         trainingApplicationService.verifyPassword(dto);
         return Result.success();
     }
