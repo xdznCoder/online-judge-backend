@@ -1,6 +1,7 @@
 package cn.xdzn.oj.service.user.domain.discussion.entity.po;
 
 import cn.xdzn.oj.common.entity.BaseEntity;
+import cn.xdzn.oj.common.exception.CustomException;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
@@ -19,6 +20,8 @@ public class DiscussionComment extends BaseEntity implements Serializable {
 
     private Integer did;
 
+    private Integer cid;
+
     private String content;
 
     private String fromUid;
@@ -32,6 +35,16 @@ public class DiscussionComment extends BaseEntity implements Serializable {
     private Integer likeNum;
 
     private Integer status;
+
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public void verifyComment(DiscussionComment comment) {
+        if(comment.getDid() == null || comment.getFromUid() == null){
+            throw new CustomException("评论失败");
+        }
+        if(comment.getContent() == null){
+            throw new CustomException("评论内容不能为空");
+        }
+    }
 }

@@ -24,6 +24,11 @@ public class DiscussionDomainServiceImpl extends ServiceImpl<DiscussionDao, Disc
         }
         update().setSql("view_num = view_num + 1").eq("id", id).update();
     }
+
+    @Override
+    public void like(Long id) {
+        update().setSql("like_num = like_num + 1").eq("id", id).update();
+    }
 }
 
 

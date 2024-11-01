@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface DiscussionDomainService extends IService<Discussion> {
 
     void checkAndUpdate(Long id);
+
+    void like(Long id);
 }

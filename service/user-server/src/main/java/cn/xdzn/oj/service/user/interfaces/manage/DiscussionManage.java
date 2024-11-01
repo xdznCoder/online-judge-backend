@@ -3,23 +3,24 @@ package cn.xdzn.oj.service.user.interfaces.manage;
 import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.controller.BaseController;
+import cn.xdzn.oj.common.limit.AccessLimit;
 import cn.xdzn.oj.service.user.application.DiscussionApplicationService;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.Discussion;
-import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionComment;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionReport;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionCommentDomainService;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionDomainService;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionReportDomainService;
 import cn.xdzn.oj.service.user.interfaces.assembler.DiscussionAssembler;
-import cn.xdzn.oj.service.user.interfaces.dto.DiscussionBackDTO;
-import cn.xdzn.oj.service.user.interfaces.dto.DiscussionDTO;
-import cn.xdzn.oj.service.user.interfaces.dto.DiscussionReportDTO;
+import cn.xdzn.oj.service.user.interfaces.dto.*;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -145,7 +146,9 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     }
     @PostMapping("/like")
     @Operation(summary = "点赞")
-    public Result<Void> like(@RequestBody Long id) {
+    @AccessLimit(seconds = 10, maxCount = 3)
+    public Result<Void> like(@RequestBody Long id,@RequestParam(required = false, defaultValue = "1")@Schema(description = "1为讨论点赞，2为评论点赞") int type) {
+        applicationService.like(id,type);
         return Result.success();
     }
 
@@ -178,10 +181,22 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
         );
     }
     @PostMapping("/comment")
-    @Operation(summary=  "评论")
-    public Result<Void> comment(@RequestBody DiscussionComment comment) {
-        comment.setStatus(0);
+    @Operation(summary=  "回复评论")
+    public Result<Void> comment(@RequestBody DiscussionCommentDTO comment) {
+        applicationService.addComment(comment);
         return Result.success();
+    }
+    @DeleteMapping("/comment/{id}/{did}")
+    @Operation(summary = "删除评论")
+    public Result<Void> deleteComment(@PathVariable Long id, @PathVariable Integer did) {
+        commentService.removeById(id);
+        commentService.deleteCommentByCid(did);
+        return Result.success();
+    }
+    @GetMapping("/commentList")
+    @Operation(summary = "获取评论列表")
+    public Result<List<DiscussionCommentListDTO>> commentList(@RequestParam Long did) {
+        return Result.success(commentService.listByDid(did));
     }
     @Override
     protected Class<Discussion> createInstance() {
