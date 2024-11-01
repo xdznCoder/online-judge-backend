@@ -143,12 +143,6 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
         Boolean isSuccess2 = commentService.deleteCommentByDiscussionId(id);
         return Result.isSuccess(isSuccess && isSuccess2);
     }
-    @GetMapping("/goToProblem")
-    @Operation(summary = "前往题目")
-    public Result<Void> goToProblem(@RequestParam Long pid) {
-        applicationService.goToProblem(pid);
-        return Result.success();
-    }
     @PostMapping("/like")
     @Operation(summary = "点赞")
     public Result<Void> like(@RequestBody Long id) {

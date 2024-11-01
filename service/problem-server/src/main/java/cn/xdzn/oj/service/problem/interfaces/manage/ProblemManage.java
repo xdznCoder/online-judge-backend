@@ -30,6 +30,8 @@ import java.util.List;
 public class ProblemManage extends BaseController<ProblemDomainService, Problem, ProblemDTO, Long> implements ProblemClient {
 
     private final ProblemApplicationService problemApplicationService;
+    private final ProblemDomainService problemDomainService;
+
 
     @Override
     protected Class<Problem> createInstance() {
@@ -129,6 +131,5 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
     public Result<Object> addList() {
         return Result.success();
     }
-
 
 }

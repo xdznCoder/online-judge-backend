@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableDiscoveryClient
 @ComponentScan("cn.xdzn.oj")
-@EnableFeignClients(basePackages = "cn.xdzn.oj")
+@EnableFeignClients(basePackages = "cn.xdzn.oj.common.client")
 @SpringBootApplication
 @MapperScan("cn.xdzn.oj.service.user.infrastructure.dao")
 public class UserApplication {

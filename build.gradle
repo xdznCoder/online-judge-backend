@@ -22,7 +22,6 @@ buildscript { // 构建 gradle 脚本自身需要的资源，可以声明的资�
         mavenCentral() // 中央仓库
     }
 
-
     dependencies {
         // springboot gradle 插件，方便版本管理
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -56,8 +55,8 @@ allprojects {
         }
     }
 
-    jar { // 禁用普通打包
-        enabled = false
+    jar { // 启用 JAR 打包
+        enabled = true
     }
 
     test { enabled = false }
@@ -65,7 +64,6 @@ allprojects {
 
 // 配置所有的子项目
 subprojects {
-
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -121,7 +119,6 @@ project(":common") {
 }
 
 project(":gateway") {
-
     apply plugin: 'org.springframework.boot'
 
     bootJar {
@@ -145,6 +142,10 @@ project(":gateway") {
         api 'org.springframework.cloud:spring-cloud-starter-bootstrap'
         api 'org.springframework.boot:spring-boot-starter-actuator'
     }
+
+    jar { // 启用 JAR 打包
+        enabled = true
+    }
 }
 
 project(":service") {
@@ -165,6 +166,10 @@ project(":service") {
             api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
             api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
             api 'com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter'
+        }
+
+        jar { // 启用 JAR 打包
+            enabled = true
         }
     }
 }

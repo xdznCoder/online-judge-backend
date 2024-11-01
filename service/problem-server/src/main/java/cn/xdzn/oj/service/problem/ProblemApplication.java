@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableDiscoveryClient
 @ComponentScan("cn.xdzn.oj")
-@EnableFeignClients(basePackages = "cn.xdzn.oj")
+@EnableFeignClients(basePackages = "cn.xdzn.oj.common.client")
 @SpringBootApplication
 public class ProblemApplication {
     public static void main(String[] args) {

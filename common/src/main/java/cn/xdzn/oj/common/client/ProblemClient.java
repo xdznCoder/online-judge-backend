@@ -1,5 +1,6 @@
 package cn.xdzn.oj.common.client;
 
+
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
