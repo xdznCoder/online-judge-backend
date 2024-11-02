@@ -32,6 +32,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/discussion")
 @RequiredArgsConstructor
+//finish
 public class DiscussionManage extends BaseController<DiscussionDomainService, Discussion, DiscussionDTO, Long>{
 
     private final DiscussionReportDomainService reportService;
@@ -149,6 +150,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     @AccessLimit(seconds = 10, maxCount = 3)
     public Result<Void> like(@RequestBody Long id,@RequestParam(required = false, defaultValue = "1")@Schema(description = "1为讨论点赞，2为评论点赞") int type) {
         applicationService.like(id,type);
+        //TODO: 通知
         return Result.success();
     }
 
@@ -184,6 +186,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     @Operation(summary=  "回复评论")
     public Result<Void> comment(@RequestBody DiscussionCommentDTO comment) {
         applicationService.addComment(comment);
+        //TODO: 通知
         return Result.success();
     }
     @DeleteMapping("/comment/{id}/{did}")

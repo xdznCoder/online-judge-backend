@@ -9,6 +9,7 @@ import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.constants.CodeEnum;
 import cn.xdzn.oj.common.controller.BaseController;
 import cn.xdzn.oj.common.util.PasswordUtils;
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import cn.xdzn.oj.service.user.domain.user.service.UserDomainService;
 import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.PasswordDTO;
@@ -16,7 +17,6 @@ import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
 import cn.xdzn.oj.service.user.domain.user.entity.vo.UserVO;
 import cn.xdzn.oj.common.client.UserClient;
-import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +37,7 @@ import java.util.Map;
 @SaCheckLogin
 @RestController
 @RequestMapping("/user")
-public class UserManage  extends BaseController<UserDomainService, User, UserDTO, Long> implements UserClient {
+public class UserManage extends BaseController<UserDomainService, User, UserDTO, Long> implements UserClient {
 
     
     @Override
@@ -111,7 +111,7 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
     public Result<UserVO> getById(@PathVariable Long id){
         User user = service.getById(id);
         UserVO vo = new UserVO().setAvatar(user.getAvatar())
-                .setUid(user.getId())
+                .setUid(user.getUid())
                 .setNickname(user.getNickname())
                 .setUsername(user.getUsername());
         return success(vo);
@@ -134,7 +134,7 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
     @SaCheckPermission("admin.user.update")
     @PatchMapping("/reset/password")
     public Result<Void> resetPassword (@RequestParam Long uid,@RequestParam String password){
-        return Result.isSuccess(service.lambdaUpdate().eq(User::getId,uid)
+        return Result.isSuccess(service.lambdaUpdate().eq(User::getUid,uid)
                 .set(User::getPassword,PasswordUtils.encrypt(password))
                 .update());
     }
@@ -157,7 +157,7 @@ public class UserManage  extends BaseController<UserDomainService, User, UserDTO
     @Operation(summary = "修改用户")
     @PutMapping("/update")
     public Result<Void> update(@RequestBody User user){
-        User u = service.getById(user.getId());
+        User u = service.getById(user.getUid());
         if(!PasswordUtils.match(user.getPassword(), u.getPassword())){
             user.setPassword(PasswordUtils.encrypt(user.getPassword()));
         }

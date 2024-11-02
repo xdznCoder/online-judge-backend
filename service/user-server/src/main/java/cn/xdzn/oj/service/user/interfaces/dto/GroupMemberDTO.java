@@ -1,8 +1,7 @@
 package cn.xdzn.oj.service.user.interfaces.dto;
 
 import cn.xdzn.oj.common.entity.ConverEntity;
-import cn.xdzn.oj.service.user.domain.group.entity.po.Group;
-import io.swagger.v3.oas.annotations.media.Schema;
+import cn.xdzn.oj.service.user.domain.group.entity.po.GroupMember;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -12,23 +11,18 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class GroupDTO extends ConverEntity<Group> {
+public class GroupMemberDTO extends ConverEntity<GroupMember> {
     private Long id;
 
-    private String avatar;
+    private Long gid;
 
-    private String name;
-
-    private String brief;
-
-    private String owner;
+    private String uid;
 
     private Integer auth;
 
-    private Integer visible;
+    private String reason;
 
-    private Integer status;
+    private String username;
 
     private Date gmtCreate;
-
 }

@@ -1,9 +1,9 @@
 package cn.xdzn.oj.service.user.domain.user.service;
 
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
-import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -89,4 +89,6 @@ public interface UserDomainService extends IService<User> {
     List<Long> getUserAc(Long uid);
 
     Map<Long, Integer> getProblemAcNum(List<Long> ids);
+
+    Map<Long, String> getUserName(List<Long> userIds);
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xdzn.oj.service.user.infrastructure.dao.GroupMemberDao">
+
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.user.domain.group.entity.po.GroupMember">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="gid" column="gid" jdbcType="BIGINT"/>
+            <result property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="auth" column="auth" jdbcType="INTEGER"/>
+            <result property="reason" column="reason" jdbcType="VARCHAR"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,gid,uid,
+        auth,reason,gmt_create,
+        gmt_modified,create_by,update_by,
+        is_deleted
+    </sql>
+</mapper>

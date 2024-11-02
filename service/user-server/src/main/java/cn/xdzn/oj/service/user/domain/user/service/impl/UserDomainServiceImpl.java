@@ -9,6 +9,7 @@ import cn.xdzn.oj.common.util.PasswordUtils;
 import cn.xdzn.oj.common.util.RedisUtil;
 import cn.xdzn.oj.common.util.ValidateCodeUtils;
 import cn.xdzn.oj.service.user.domain.role.service.RoleDomainService;
+import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import cn.xdzn.oj.service.user.domain.user.repository.UserAcProblemRepository;
 import cn.xdzn.oj.service.user.domain.user.service.UserRoleDomainService;
 import cn.xdzn.oj.service.user.domain.user.service.UserDomainService;
@@ -16,7 +17,6 @@ import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserDTO;
 import cn.xdzn.oj.service.user.interfaces.dto.UserInfo;
 import cn.xdzn.oj.service.user.infrastructure.dao.UserDao;
-import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import cn.xdzn.oj.service.user.domain.user.entity.po.UserRole;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 用户服务实现类
@@ -87,15 +88,15 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
         if(!PasswordUtils.match(password,user.getPassword())){
             throw new CustomException(CodeEnum.PASSWORD_ERROR);
         }
-        StpUtil.login(user.getId());
-        redisUtil.set(RedisConstants.USER_TOKEN, String.valueOf(user.getId()),StpUtil.getTokenValue());
-        redisUtil.set(RedisConstants.USER,String.valueOf(user.getId()), JSON.toJSONString(user));
+        StpUtil.login(user.getUid());
+        redisUtil.set(RedisConstants.USER_TOKEN, String.valueOf(user.getUid()),StpUtil.getTokenValue());
+        redisUtil.set(RedisConstants.USER,String.valueOf(user.getUid()), JSON.toJSONString(user));
         return StpUtil.getTokenValue();
     }
 
     @Override
     public User getUserByName(String username) {
-        return lambdaQuery().select(User::getId,User::getUsername,User::getPassword,User::getType,User::getAvatar).eq(User::getUsername,username).one();
+        return lambdaQuery().select(User::getUid,User::getUsername,User::getPassword,User::getType,User::getAvatar).eq(User::getUsername,username).one();
     }
     @Override
     public Boolean bindRole(Long userId, Long roleId) {
@@ -110,8 +111,8 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
 
     @Override
     public User appendInfo(User user) {
-        List<Long> roleIdsByUserId = userRoleService.getRoleIdsByUserId(user.getId());
-        List<String> roleNamesByUserId = userRoleService.getRoleNamesByUserId(user.getId());
+        List<Long> roleIdsByUserId = userRoleService.getRoleIdsByUserId(user.getUid());
+        List<String> roleNamesByUserId = userRoleService.getRoleNamesByUserId(user.getUid());
         return user.setRoleIds(roleIdsByUserId).setRoleNames(roleNamesByUserId);
     }
 
@@ -152,6 +153,15 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
         return userAcProblemRepository.getProblemAcNum(ids);
     }
 
+    @Override
+    public Map<Long, String> getUserName(List<Long> userIds) {
+        return lambdaQuery().select(User::getUid,User::getUsername)
+                .in(User::getUid,userIds)
+                .list()
+                .stream()
+                .collect(Collectors.toMap(User::getUid,User::getUsername));
+    }
+
     /**
      * 通过电子邮件获取用户
      *
@@ -159,7 +169,7 @@ public class UserDomainServiceImpl extends ServiceImpl<UserDao, User>
      * @return {@link User}
      */
     private User getUserByEmail(String email){
-        return lambdaQuery().select(User::getId,User::getUsername,User::getPassword,User::getType)
+        return lambdaQuery().select(User::getUid,User::getUsername,User::getPassword,User::getType)
                 .eq(User::getEmail,email)
                 .one();
     }

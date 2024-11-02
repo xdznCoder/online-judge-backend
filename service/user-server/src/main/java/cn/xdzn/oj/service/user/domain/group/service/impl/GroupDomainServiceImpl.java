@@ -1,5 +1,6 @@
 package cn.xdzn.oj.service.user.domain.group.service.impl;
 
+import cn.xdzn.oj.common.exception.CustomException;
 import cn.xdzn.oj.service.user.domain.group.entity.po.Group;
 import cn.xdzn.oj.service.user.domain.group.service.GroupDomainService;
 import cn.xdzn.oj.service.user.infrastructure.dao.GroupDao;
@@ -15,6 +16,12 @@ import org.springframework.stereotype.Service;
 public class GroupDomainServiceImpl extends ServiceImpl<GroupDao, Group>
     implements GroupDomainService {
 
+    @Override
+    public void existName(String name) {
+        this.lambdaQuery().eq(Group::getName, name).oneOpt().ifPresent(group -> {
+            throw new CustomException("团队名称已存在");
+        });
+    }
 }
 
 
