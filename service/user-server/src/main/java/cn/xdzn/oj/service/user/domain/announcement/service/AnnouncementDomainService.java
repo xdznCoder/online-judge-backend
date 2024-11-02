@@ -1,6 +1,8 @@
 package cn.xdzn.oj.service.user.domain.announcement.service;
 
 import cn.xdzn.oj.service.user.domain.announcement.entity.po.Announcement;
+import cn.xdzn.oj.service.user.interfaces.dto.AnnouncementDTO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AnnouncementDomainService extends IService<Announcement> {
 
+    IPage<AnnouncementDTO> frontPage(Long pageNum, Long pageSize, String key, Long gid);
 }
