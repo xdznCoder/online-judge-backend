@@ -17,7 +17,6 @@ import java.util.List;
 */
 @Mapper
 public interface ProblemTagDao extends BaseMapper<ProblemTag> {
-    List<Integer> selectByTagIds(List<Integer> tagIds);
 
     @Select("SELECT pt.pid AS pid, t.name AS tagName " +
             "FROM problem_tag pt " +

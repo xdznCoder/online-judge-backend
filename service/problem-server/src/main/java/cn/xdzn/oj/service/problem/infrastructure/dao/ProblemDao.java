@@ -14,4 +14,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ProblemDao extends BaseMapper<Problem> {
+    String getLastCode(Long pid, Long uid);
+
+    Void addCode(Long pid, Long uid, String code, String language);
+
+    void deleteCode(Long pid, Long uid);
 }

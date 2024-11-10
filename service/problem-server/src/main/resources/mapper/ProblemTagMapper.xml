@@ -16,10 +16,5 @@
         id,pid,tid,
         gmt_create,gmt_modified
     </sql>
-    <select id="selectByTagIds" resultType="java.lang.Integer">
-    select pid from problem_tag where tid in
-    <foreach collection="list" item="item" open="(" separator="," close=")">
-            #{item}
-    </foreach>
-    </select>
+
 </mapper>

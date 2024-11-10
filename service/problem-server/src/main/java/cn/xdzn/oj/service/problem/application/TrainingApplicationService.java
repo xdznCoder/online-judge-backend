@@ -96,6 +96,6 @@ public class TrainingApplicationService {
                 .select(Problem::getId, Problem::getTitle, Problem::getDifficulty, Problem::getProblemId)
                 .in(Problem::getId, list)
                 .page(new Page<>(pageNum, pageSize))
-                .convert(ProblemFrontDTO::toDTO);
+                .convert(ProblemFrontDTO::  toDTO);
     }
 }

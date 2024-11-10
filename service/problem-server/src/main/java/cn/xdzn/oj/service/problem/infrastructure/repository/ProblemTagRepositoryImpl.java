@@ -13,10 +13,6 @@ import java.util.List;
 public class ProblemTagRepositoryImpl implements ProblemTagRepository {
 
     private final ProblemTagDao problemTagMapper;
-    @Override
-    public List<Integer> findProblemsByTagIds(List<Integer> tagIds) {
-        return problemTagMapper.selectByTagIds(tagIds);
-    }
 
     @Override
     public List<ProblemTagVO> findTagsByProblemIds(List<Long> ids) {

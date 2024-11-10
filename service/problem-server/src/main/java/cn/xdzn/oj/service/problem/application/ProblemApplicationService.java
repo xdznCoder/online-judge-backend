@@ -2,20 +2,26 @@ package cn.xdzn.oj.service.problem.application;
 
 
 import cn.xdzn.oj.common.client.UserClient;
+import cn.xdzn.oj.common.exception.CustomException;
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.Problem;
 
 import cn.xdzn.oj.service.problem.domain.problem.service.ProblemDomainService;
 import cn.xdzn.oj.service.problem.domain.problem.service.ProblemTagDomainService;
+import cn.xdzn.oj.service.problem.interfaces.dto.ProblemDTO;
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemFrontDTO;
-import cn.xdzn.oj.service.problem.domain.problem.entity.vo.ProblemSubmitNumVO;
+import cn.xdzn.oj.service.problem.domain.problem.entity.po.ProblemTag;
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Random;
+
 
 /**
  * 题目应用层
@@ -25,15 +31,13 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProblemApplicationService {
+    // 静态Random对象，只初始化一次
+    private static final Random RANDOM = new Random();
 
     private final ProblemDomainService problemDomainService;
     private final ProblemTagDomainService problemTagDomainService;
     @Lazy
     private final UserClient userClient;
-
-    public IPage<Problem> selectPage(Long pageNum, Long pageSize, String key, List<Integer> tagIds, Integer type) {
-        return problemDomainService.selectPage(pageNum, pageSize, key, tagIds, type);
-    }
 
     public List<ProblemFrontDTO> fillProblemInfo(List<ProblemFrontDTO> records) {
         // 获取题目id
@@ -54,5 +58,49 @@ public class ProblemApplicationService {
 
         // 填充问题信息
         return problemDomainService.fill(records, null, acNumMap, tagNamesMap, acList);
+    }
+
+    public Problem random() {
+        // 获取当前用户已AC的题目
+        List<Long> list = userClient.getUserAc();
+        List<Long> ids = problemDomainService
+                .lambdaQuery()
+                .select(Problem::getId)
+                .notIn(Problem::getId, list)
+                .list()
+                .stream()
+                .map(Problem::getId)
+                .toList();
+        int size = ids.size();
+        if(size == 0){
+            throw new CustomException("无更多题目");
+        }
+        Long randomId = ids.get(RANDOM.nextInt(size));
+        // 获取随机题目的详细信息并返回
+        return problemDomainService.detail(randomId);
+    }
+
+    public IPage<ProblemFrontDTO> selectPage(Long pageNum, Long pageSize, String key, List<Integer> tagIds, Integer difficulty) {
+        List<Long> problemsByTagIds = null;
+        if(tagIds != null){
+            problemsByTagIds = problemTagDomainService.lambdaQuery()
+                    .select(ProblemTag::getPid)
+                    .in(ProblemTag::getTid, tagIds)
+                    .list()
+                    .stream()
+                    .map(ProblemTag::getPid)
+                    .toList();
+        }
+        return problemDomainService.lambdaQuery()
+                .select(Problem::getId, Problem::getTitle, Problem::getDifficulty,
+                       Problem::getProblemId)
+                .like(StringUtils.isNotBlank(key),Problem::getTitle, key)
+                .eq(difficulty != null, Problem::getDifficulty, difficulty)
+                .eq(Problem::getAuth, 1)
+                .eq(Problem::getIsDeleted, 0)
+                .in(Problem::getApplyPublicProgress, Arrays.asList(null,2))
+                .in(problemsByTagIds != null, Problem::getId, problemsByTagIds)
+                .page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageNum, pageSize))
+                .convert(ProblemFrontDTO::toDTO);
     }
 }

@@ -40,10 +40,6 @@ public class Problem extends BaseEntity implements Serializable {
 
     private String examples;
 
-    private Integer isRemote;
-
-    private String source;
-
     private Integer difficulty;
 
     private String hint;
@@ -56,15 +52,9 @@ public class Problem extends BaseEntity implements Serializable {
 
     private String judgeMode;
 
-    private String judgeCaseMode;
+    private String functionCode;
 
-    private String userExtraFile;
-
-    private String judgeExtraFile;
-
-    private String spjCode;
-
-    private String spjLanguage;
+    private String functionLanguage;
 
     private Integer isRemoveEndBlank;
 
@@ -81,12 +71,6 @@ public class Problem extends BaseEntity implements Serializable {
     private Long gid;
 
     private Integer applyPublicProgress;
-
-    private Integer isFileIo;
-
-    private String ioReadFileName;
-
-    private String ioWriteFileName;
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -10,8 +10,6 @@ import java.util.List;
  */
 @Repository
 public interface ProblemTagRepository {
-    // 根据 tagIds 查找关联的题目
-    List<Integer> findProblemsByTagIds(List<Integer> tagIds);
 
     List<ProblemTagVO> findTagsByProblemIds(List<Long> ids);
 }
