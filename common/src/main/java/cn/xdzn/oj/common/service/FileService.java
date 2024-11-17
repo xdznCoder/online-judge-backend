@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.Serial;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+
+/**
+ * 文件上传服务
+ * @author shelly
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

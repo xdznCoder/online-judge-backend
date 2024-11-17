@@ -1,10 +1,13 @@
 package cn.xdzn.oj.service.system.interfaces.manage;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.service.FileService;
 import cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig;
+import cn.xdzn.oj.service.system.domain.system.service.SystemMonitorDomainService;
 import cn.xdzn.oj.service.system.domain.system.service.SystemCarouselDomainService;
 import cn.xdzn.oj.service.system.domain.system.service.SystemConfigDomainService;
+import cn.xdzn.oj.service.system.interfaces.dto.SystemMonitorServerDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class SystemManage {
     private final SystemCarouselDomainService systemCarouselDomainService;
     private final SystemConfigDomainService systemDomainService;
     private final FileService fileService;
+    private final SystemMonitorDomainService monitorServer;
 
     @GetMapping("/carousel/list")
     @Operation(summary = "轮播图列表")
@@ -74,6 +78,13 @@ public class SystemManage {
     public Result<Void> updateConfig(@RequestBody SystemConfig systemConfig) {
         systemDomainService.updateById(systemConfig);
         return Result.success();
+    }
+
+    @Operation(summary = "获取服务器监控信息")
+    @GetMapping("/serverInfo")
+    @SaCheckPermission
+    public Result<SystemMonitorServerDTO> serverInfo() {
+        return Result.success(monitorServer.serverInfo());
     }
 
 }

@@ -2,6 +2,9 @@ package cn.xdzn.oj.common.client;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Map;
 
 /**
  * 问题客户端
@@ -11,4 +14,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  */
 @FeignClient("problem-server")
 public interface ProblemClient {
+    @GetMapping("/problem/monitor")
+    Map<String, Long> queryMonitorInfo();
 }

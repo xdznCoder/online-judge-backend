@@ -38,4 +38,9 @@ public class UserAcProblemRepositoryImpl implements UserAcProblemRepository {
     public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
         return userAcProblemDao.getProblemAcNum(ids);
     }
+
+    @Override
+    public Long getTotalAcNum() {
+        return userAcProblemDao.selectCount(new LambdaQueryWrapper<>());
+    }
 }

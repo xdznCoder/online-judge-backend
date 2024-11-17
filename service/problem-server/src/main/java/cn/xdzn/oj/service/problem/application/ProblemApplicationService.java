@@ -17,10 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 
 /**
@@ -102,5 +99,13 @@ public class ProblemApplicationService {
                 .in(problemsByTagIds != null, Problem::getId, problemsByTagIds)
                 .page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageNum, pageSize))
                 .convert(ProblemFrontDTO::toDTO);
+    }
+
+    public Map<String, Long> queryMonitorInfo() {
+        Map<String, Long> map = new HashMap<>();
+        Long problemCount = problemDomainService.lambdaQuery().eq(Problem::getIsDeleted, 0).count();
+        map.put("problemCount", problemCount);
+        //TODO 获取题目提交数量
+        return map;
     }
 }

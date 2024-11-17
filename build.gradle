@@ -198,6 +198,6 @@ project(":service:judge-server") {
 // system-service 模块依赖
 project(":service:system-server") {
     dependencies {
-
+            implementation 'com.github.oshi:oshi-core:6.6.3'
     }
 }

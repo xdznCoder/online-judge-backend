@@ -9,6 +9,7 @@ import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.constants.CodeEnum;
 import cn.xdzn.oj.common.controller.BaseController;
 import cn.xdzn.oj.common.util.PasswordUtils;
+import cn.xdzn.oj.service.user.application.UserApplicationService;
 import cn.xdzn.oj.service.user.domain.user.entity.po.User;
 import cn.xdzn.oj.service.user.domain.user.service.UserDomainService;
 import cn.xdzn.oj.service.user.interfaces.dto.LoginParamDTO;
@@ -22,6 +23,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +39,9 @@ import java.util.Map;
 @SaCheckLogin
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserManage extends BaseController<UserDomainService, User, UserDTO, Long> implements UserClient {
+    private UserApplicationService userApplicationService;
 
     
     @Override
@@ -182,6 +186,11 @@ public class UserManage extends BaseController<UserDomainService, User, UserDTO,
     @Operation(summary = "获取题目AC数量")
     public Map<Long, Integer> getProblemAcNum(List<Long> ids) {
         return service.getProblemAcNum(ids);
+    }
+
+    @Override
+    public Map<String, Long> queryMonitorInfo() {
+        return userApplicationService.queryMonitorInfo();
     }
 
     @Override

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 题目管理
@@ -162,4 +163,8 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
         return Result.page(service.backList(pageNum, pageSize, key, auth));
     }
 
+    @Override
+    public Map<String, Long> queryMonitorInfo() {
+        return problemApplicationService.queryMonitorInfo();
+    }
 }
