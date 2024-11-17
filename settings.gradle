@@ -1,4 +1,3 @@
 rootProject.name = 'online-judge'
-include 'common', 'gateway', 'service', 'service:user-server', 'service:problem-server', 'service:judge-server'
-
+include 'common', 'gateway', 'service', 'service:user-server', 'service:problem-server', 'service:judge-server', 'service:system-server'
 

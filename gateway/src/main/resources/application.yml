@@ -32,6 +32,11 @@ spring:
           uri: lb://judge-server
           predicates:
             - Path=/judge/**
+        # 判题模块
+        - id: system-server
+          uri: lb://system-server
+          predicates:
+            - Path=/system/**
       globalcors:
         cors-configurations:
           '[/**]':
@@ -76,6 +81,10 @@ knife4j:
         url: /judge/api-docs?group=default
         service-name: judge-server
         order: 3
+      - name: 系统服务
+        url: /system/api-docs?group=default
+        service-name: system-server
+        order: 4
     # 是否开启 Knife4j(生产环境下需要关闭)
     enabled: true
 sa-token:

@@ -108,6 +108,7 @@ project(":common") {
         implementation 'org.springframework.boot:spring-boot-starter-mail'
         api 'org.springframework.boot:spring-boot-starter-web'
         api 'org.springframework.boot:spring-boot-starter-data-redis'
+        implementation 'io.minio:minio:8.4.2'
         // 下面为 Knife4j 文档所需依赖，缺一不可
         api 'javax.xml.bind:jaxb-api:2.3.1'
         api 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
@@ -189,6 +190,13 @@ project(":service:problem-server") {
 
 // judge-service 模块依赖
 project(":service:judge-server") {
+    dependencies {
+
+    }
+}
+
+// system-service 模块依赖
+project(":service:system-server") {
     dependencies {
 
     }
