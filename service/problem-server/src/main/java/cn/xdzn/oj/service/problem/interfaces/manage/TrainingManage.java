@@ -87,6 +87,37 @@ public class TrainingManage extends BaseController<TrainingDomainService, Traini
        page.setRecords(trainingApplicationService.fillTrainingInfo(page.getRecords()));
        return Result.page(page);
     }
+    @GetMapping("/backPage")
+    @Operation(summary = "后台分页查询")
+    public Result<PageInfo<Training>> backPage(
+            @RequestParam(required = false, defaultValue = "1") Long pageNum,
+            @RequestParam(required = false, defaultValue = "10") Long pageSize,
+            @RequestParam(required = false) String key,
+            @RequestParam(required = false, defaultValue = "-1") Integer groupId,
+            @RequestParam(required = false,defaultValue = "-1") Long categoryId
+    ){
+        var page = service.lambdaQuery()
+                .select(Training::getId, Training::getTitle, Training::getGid, Training::getAuth, Training::getRank
+                        ,Training::getStatus, Training::getGmtModified
+                       ,Training::getGmtModified, Training::getAuthor, Training::getCid)
+               .like(StringUtils.isNotBlank(key), Training::getTitle, key)
+               .eq(groupId != -1, Training::getGid, groupId)
+               .eq(categoryId != -1, Training::getCid, categoryId)
+               .eq(Training::getIsDeleted,0)
+               .orderByAsc(Training::getRank)
+               .page(new Page<>(pageNum, pageSize));
+        return Result.page(page);
+    }
+
+    @PostMapping("/addProblemList")
+    @Operation(summary = "添加题目时列表展示")
+    public Result<PageInfo<ProblemSimpleDTO>> addProblemList(
+            @RequestParam(required = false, defaultValue = "1") Long pageNum,
+            @RequestParam(required = false, defaultValue = "10") Long pageSize,
+            @RequestParam(required = false) String key
+    ){
+        return Result.page(problemApplicationService.searchList(pageNum, pageSize, key));
+    }
 
     @GetMapping("/category")
     @Operation(summary = "查询训练分类")
@@ -136,9 +167,7 @@ public class TrainingManage extends BaseController<TrainingDomainService, Traini
 
     @PostMapping("/verifyPassword")
     @Operation(summary = "验证训练密码")
-    public Result<Void> verifyPassword(@RequestBody TrainingPasswordDTO dto ) {
-        // 验证逻辑
-        //TODO 加入pass表待完成
+    public Result<Void> verifyPassword(@RequestBody TrainingPasswordDTO dto) {
         trainingApplicationService.verifyPassword(dto);
         return Result.success();
     }

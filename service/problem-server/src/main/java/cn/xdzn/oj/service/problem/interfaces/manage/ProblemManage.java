@@ -90,12 +90,6 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
         return Result.success(service.newProblem());
     }
 
-//    @Operation(summary = "获取评测数据")
-//    @GetMapping("/getJudgeData")
-//    public Result<List<Object>> getJudgeData(Long pid) {
-//        return Result.success();
-//    }
-
     @Operation(summary = "更改加入公开题库状态")
     @PostMapping("/changePublicStatus")
     public Result<Void> changePublicStatus(Long pid, Integer status) {
@@ -103,7 +97,7 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
         return Result.success();
     }
     @GetMapping("/getAllTag")
-    @Operation(summary = "获取所有申请")
+    @Operation(summary = "获取所有加入公开仓库申请")
     public Result<PageInfo<ProblemApplyDTO>> getAll(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,
@@ -124,21 +118,6 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
         return Result.success();
     }
 
-//    @GetMapping("/submitList")
-//    @Operation(summary = "获取题目提交列表")
-//    public Result<PageInfo<Object>> codeList(
-//            @RequestParam(required = false,defaultValue = "1") Long pageNum,
-//            @RequestParam(required = false,defaultValue = "10")Long pageSize,
-//            @RequestParam(required = false,defaultValue = "-1")Long uid,
-//            @RequestParam(required = false,defaultValue = "") String key) {
-//        return Result.success();
-//    }
-//    @GetMapping("/submitDetail")
-//    @Operation(summary = "获取题目提交详情")
-//    public Result<Object> codeDetail(Long sid) {
-//        return Result.success();
-//    }
-
     @GetMapping("/getLastCode")
     @Operation(summary = "获取题目最后一次代码")
     public Result<String> getProblemCode(Long pid, Long uid) {
@@ -153,7 +132,7 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
 
 
     @GetMapping("/addList")
-    @Operation(summary = "后台添加题目列表展示")
+    @Operation(summary = "后台题目列表展示")
     public Result<PageInfo<ProblemDTO>> list(
             @RequestParam(required = false, defaultValue = "1") Long pageNum,
             @RequestParam(required = false, defaultValue = "10") Long pageSize,
@@ -161,6 +140,12 @@ public class ProblemManage extends BaseController<ProblemDomainService, Problem,
             @RequestParam(required = false, defaultValue = "-1") Integer auth
     ) {
         return Result.page(service.backList(pageNum, pageSize, key, auth));
+    }
+
+    @GetMapping("/getAllResult/{pid}")
+    @Operation(summary = "获取题目各类结果统计信息")
+    public Result<Map<String, Long>> getMonitorInfo(@PathVariable Long pid) {
+        return Result.success();
     }
 
     @Override

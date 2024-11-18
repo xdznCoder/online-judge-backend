@@ -1,6 +1,7 @@
 package cn.xdzn.oj.service.problem.application;
 
 
+import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.client.UserClient;
 import cn.xdzn.oj.common.exception.CustomException;
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.Problem;
@@ -10,8 +11,10 @@ import cn.xdzn.oj.service.problem.domain.problem.service.ProblemTagDomainService
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemDTO;
 import cn.xdzn.oj.service.problem.interfaces.dto.ProblemFrontDTO;
 import cn.xdzn.oj.service.problem.domain.problem.entity.po.ProblemTag;
+import cn.xdzn.oj.service.problem.interfaces.dto.ProblemSimpleDTO;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -107,5 +110,17 @@ public class ProblemApplicationService {
         map.put("problemCount", problemCount);
         //TODO 获取题目提交数量
         return map;
+    }
+
+    public IPage<ProblemSimpleDTO> searchList(Long pageNum, Long pageSize, String key) {
+        return problemDomainService.lambdaQuery()
+                .select(Problem::getId, Problem::getTitle, Problem::getProblemId)
+                .like(StringUtils.isNotBlank(key), Problem::getTitle, key)
+                .eq(Problem::getAuth, 1)
+                .eq(Problem::getIsDeleted, 0)
+                .in(Problem::getApplyPublicProgress, Arrays.asList(null,2))
+                .page(new Page<>(pageNum, pageSize))
+                .convert(ProblemSimpleDTO::toDTO);
+
     }
 }
