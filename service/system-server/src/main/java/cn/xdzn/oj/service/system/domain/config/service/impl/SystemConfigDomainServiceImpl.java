@@ -1,7 +1,7 @@
-package cn.xdzn.oj.service.system.domain.system.service.impl;
+package cn.xdzn.oj.service.system.domain.config.service.impl;
 
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig;
-import cn.xdzn.oj.service.system.domain.system.service.SystemConfigDomainService;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemConfig;
+import cn.xdzn.oj.service.system.domain.config.service.SystemConfigDomainService;
 
 
 import cn.xdzn.oj.service.system.infrastructure.dao.SystemConfigDao;

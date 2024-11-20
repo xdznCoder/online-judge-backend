@@ -1,7 +1,7 @@
 package cn.xdzn.oj.service.system.infrastructure.dao;
 
 
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

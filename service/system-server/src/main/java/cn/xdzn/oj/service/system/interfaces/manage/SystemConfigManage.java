@@ -3,31 +3,31 @@ package cn.xdzn.oj.service.system.interfaces.manage;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.xdzn.oj.common.Result;
 import cn.xdzn.oj.common.service.FileService;
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig;
-import cn.xdzn.oj.service.system.domain.system.service.SystemMonitorDomainService;
-import cn.xdzn.oj.service.system.domain.system.service.SystemCarouselDomainService;
-import cn.xdzn.oj.service.system.domain.system.service.SystemConfigDomainService;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemConfig;
+import cn.xdzn.oj.service.system.domain.config.service.SystemMonitorDomainService;
+import cn.xdzn.oj.service.system.domain.config.service.SystemCarouselDomainService;
+import cn.xdzn.oj.service.system.domain.config.service.SystemConfigDomainService;
 import cn.xdzn.oj.service.system.interfaces.dto.SystemMonitorServerDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemCarousel;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemCarousel;
 
 import java.util.List;
 
 /**
- * 系统管理
+ * 系统配置管理
  *
  * @author shelly
  * @date 2024/11/16
  */
-@Tag(name = "系统管理")
+@Tag(name = "系统配置管理")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/system/system")
-public class SystemManage {
+@RequestMapping("/system/config")
+public class SystemConfigManage {
 
     private final SystemCarouselDomainService systemCarouselDomainService;
     private final SystemConfigDomainService systemDomainService;

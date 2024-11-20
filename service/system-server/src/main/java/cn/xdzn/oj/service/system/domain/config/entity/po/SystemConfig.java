@@ -1,4 +1,4 @@
-package cn.xdzn.oj.service.system.domain.system.entity.po;
+package cn.xdzn.oj.service.system.domain.config.entity.po;
 
 import cn.xdzn.oj.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;

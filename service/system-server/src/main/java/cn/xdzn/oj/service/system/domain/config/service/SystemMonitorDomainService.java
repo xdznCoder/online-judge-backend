@@ -1,4 +1,4 @@
-package cn.xdzn.oj.service.system.domain.system.service;
+package cn.xdzn.oj.service.system.domain.config.service;
 
 import cn.xdzn.oj.service.system.interfaces.dto.SystemMonitorServerDTO;
 

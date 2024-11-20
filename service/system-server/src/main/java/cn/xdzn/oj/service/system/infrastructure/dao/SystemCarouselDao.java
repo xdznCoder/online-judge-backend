@@ -2,7 +2,7 @@ package cn.xdzn.oj.service.system.infrastructure.dao;
 
 
 
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemCarousel;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemCarousel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

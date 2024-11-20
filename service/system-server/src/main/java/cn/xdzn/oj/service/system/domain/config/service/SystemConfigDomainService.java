@@ -1,6 +1,6 @@
-package cn.xdzn.oj.service.system.domain.system.service;
+package cn.xdzn.oj.service.system.domain.config.service;
 
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemConfig;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

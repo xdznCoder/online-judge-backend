@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xdzn.oj.service.system.infrastructure.dao.SystemConfigDao">
 
-    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.system.domain.system.entity.po.SystemConfig">
+    <resultMap id="BaseResultMap" type="cn.xdzn.oj.service.system.domain.config.entity.po.SystemConfig">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="baseUrl" column="base_url" jdbcType="VARCHAR"/>
             <result property="siteName" column="site_name" jdbcType="VARCHAR"/>

@@ -1,8 +1,8 @@
-package cn.xdzn.oj.service.system.domain.system.service.impl;
+package cn.xdzn.oj.service.system.domain.config.service.impl;
 
 
-import cn.xdzn.oj.service.system.domain.system.entity.po.SystemCarousel;
-import cn.xdzn.oj.service.system.domain.system.service.SystemCarouselDomainService;
+import cn.xdzn.oj.service.system.domain.config.entity.po.SystemCarousel;
+import cn.xdzn.oj.service.system.domain.config.service.SystemCarouselDomainService;
 import cn.xdzn.oj.service.system.infrastructure.dao.SystemCarouselDao;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

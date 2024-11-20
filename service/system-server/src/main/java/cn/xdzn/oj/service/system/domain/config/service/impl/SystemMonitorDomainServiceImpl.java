@@ -1,4 +1,4 @@
-package cn.xdzn.oj.service.system.domain.system.service.impl;
+package cn.xdzn.oj.service.system.domain.config.service.impl;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
@@ -13,7 +13,7 @@ import cn.hutool.system.SystemUtil;
 import cn.xdzn.oj.common.client.ProblemClient;
 import cn.xdzn.oj.common.client.UserClient;
 import cn.xdzn.oj.common.util.NetworkInfoUtils;
-import cn.xdzn.oj.service.system.domain.system.service.SystemMonitorDomainService;
+import cn.xdzn.oj.service.system.domain.config.service.SystemMonitorDomainService;
 import cn.xdzn.oj.service.system.interfaces.dto.SystemMonitorServerDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
