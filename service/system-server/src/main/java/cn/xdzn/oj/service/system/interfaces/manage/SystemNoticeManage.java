@@ -8,8 +8,12 @@ import cn.xdzn.oj.service.system.domain.notice.service.SystemNoticeDomainService
 import cn.xdzn.oj.service.system.interfaces.dto.SystemNoticeDTO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,19 +65,27 @@ public class SystemNoticeManage extends BaseController<SystemNoticeDomainService
                 .page(new Page<>(page, size)));
     }
 
-    @Operation(summary = "系统通知推送指定用户")
-    @PostMapping("/broadcast/{id}")
-    public Result<Void> broadcast(@RequestBody List<Long> ids,@PathVariable Long id){
-        service.broadcastToUsers(ids,id);
-        return Result.success();
+//    @Operation(summary = "系统通知推送指定用户")
+//    @PostMapping("/broadcast/{id}")
+//    public Result<Void> broadcast(@RequestBody List<Long> ids,@PathVariable Long id){
+//        service.broadcastToUsers(ids,id);
+//        return Result.success();
+//    }
+//    @Operation(summary = "系统通知推送所有用户")
+//    @PostMapping("/broadcastAll/{uid}")
+//    public Result<Void> broadcastAll(@PathVariable Long uid){
+//        service.broadcastToAll(uid);
+//        return Result.success();
+//    }
+    @Operation(summary = "一键推送")
+    @Async("customTaskExecutor")
+    @PostMapping("/broadcast")
+    public void broadcast(
+            @RequestBody @Nullable List<Long> ids,
+            @RequestParam @Schema(description = "1:指定用户通知，2:全体用户通知") int type,
+            @RequestParam Long id
+     ){
+        service.push2Users(ids,type,id);
     }
-    @Operation(summary = "系统通知推送所有用户")
-    @PostMapping("/broadcastAll/{uid}")
-    public Result<Void> broadcastAll(@PathVariable Long uid){
-        service.broadcastToAll(uid);
-        return Result.success();
-    }
-
-
 
 }

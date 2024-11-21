@@ -194,6 +194,16 @@ public class UserManage extends BaseController<UserDomainService, User, UserDTO,
     }
 
     @Override
+    public List<Long> getAllId() {
+        return service.lambdaQuery()
+                .select(User::getUid)
+                .eq(User::getStatus, 0)
+                .eq(User::getIsDeleted,0)
+                .list()
+                .stream().map(obj -> Long.parseLong(obj.toString())).toList();
+    }
+
+    @Override
     protected Class<User> createInstance() {
         return User.class;
     }

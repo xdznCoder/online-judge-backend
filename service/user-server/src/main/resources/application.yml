@@ -81,3 +81,11 @@ aliyun:
       keysecret: $$$ OSS阿里云秘钥 $$$
       bucketname: $$$ OSS阿里云桶名 $$$
       foldername: $$$ OSS阿里云文件夹名 $$$
+
+# 线程池配置
+thread:
+  pool:
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 50
+    keep-alive-seconds: 60

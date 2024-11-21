@@ -21,4 +21,6 @@ public interface UserClient {
     Map<Long, Integer> getProblemAcNum(List<Long> ids);
     @GetMapping("/user/monitor")
     Map<String, Long> queryMonitorInfo();
+    @GetMapping("/user/getAllIds")
+    List<Long> getAllId();
 }

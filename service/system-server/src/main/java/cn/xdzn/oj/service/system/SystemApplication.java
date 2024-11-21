@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 系统应用程序
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("cn.xdzn.oj")
 @EnableFeignClients(basePackages = "cn.xdzn.oj.common.client")
 @SpringBootApplication
+@EnableAsync
 public class SystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(SystemApplication.class, args);

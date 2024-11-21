@@ -150,7 +150,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     @AccessLimit(seconds = 10, maxCount = 3)
     public Result<Void> like(@RequestBody Long id,@RequestParam(required = false, defaultValue = "1")@Schema(description = "1为讨论点赞，2为评论点赞") int type) {
         applicationService.like(id,type);
-        //TODO: 通知
+         //TODO: 通知
         return Result.success();
     }
 

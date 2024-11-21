@@ -12,7 +12,9 @@ import java.util.List;
 */
 public interface SystemNoticeDomainService extends IService<SystemNotice> {
 
-    void broadcastToUsers(List<Long> ids, Long id);
+//    void broadcastToUsers(List<Long> ids, Long id);
+//
+//    void broadcastToAll(Long id);
 
-    void broadcastToAll(Long id);
+    void push2Users(List<Long> ids, int type,Long id);
 }

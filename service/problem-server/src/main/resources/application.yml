@@ -74,3 +74,11 @@ sa-token:
   isReadHeader: true
   #  取消cookie
   isReadCookie: false
+
+# 线程池配置
+thread:
+  pool:
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 50
+    keep-alive-seconds: 60

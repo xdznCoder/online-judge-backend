@@ -80,3 +80,10 @@ minio:
   access-key: Y6c5n4j17giYc0dEeK2N
   secret-key: BphELSjyafO5cje1lw4djraZv2BKKaHaBjPpx0OS
   bucket-name: xdzn-oj
+# 线程池配置
+thread:
+  pool:
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 50
+    keep-alive-seconds: 60
