@@ -17,4 +17,10 @@ public interface SystemNoticeDomainService extends IService<SystemNotice> {
 //    void broadcastToAll(Long id);
 
     void push2Users(List<Long> ids, int type,Long id);
+
+    Integer getUnReadCount(Long userId);
+
+    void readNotice(Long loginIdAsLong);
+
+    void deleteNotice(Long id);
 }

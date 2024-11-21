@@ -2,9 +2,11 @@ package cn.xdzn.oj.service.system.interfaces.manage;
 
 import cn.xdzn.oj.common.PageInfo;
 import cn.xdzn.oj.common.Result;
+import cn.xdzn.oj.common.client.SystemClient;
 import cn.xdzn.oj.common.controller.BaseController;
 import cn.xdzn.oj.service.system.domain.notice.entity.po.SystemNotice;
 import cn.xdzn.oj.service.system.domain.notice.service.SystemNoticeDomainService;
+import cn.xdzn.oj.service.system.infrastructure.dao.SystemNoticeUserDao;
 import cn.xdzn.oj.service.system.interfaces.dto.SystemNoticeDTO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +28,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/system/notice")
-public class SystemNoticeManage extends BaseController<SystemNoticeDomainService, SystemNotice, SystemNoticeDTO, Long> {
+public class SystemNoticeManage extends BaseController<SystemNoticeDomainService, SystemNotice, SystemNoticeDTO, Long> implements SystemClient {
 
 
     @Override
@@ -87,5 +89,18 @@ public class SystemNoticeManage extends BaseController<SystemNoticeDomainService
      ){
         service.push2Users(ids,type,id);
     }
+    @Override
+    public Integer getNoticeUnRead(Long userId) {
+        return service.getUnReadCount(userId);
+    }
 
+    @Override
+    public void readNotice(Long loginIdAsLong) {
+        service.readNotice(loginIdAsLong);
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        service.deleteNotice(id);
+    }
 }

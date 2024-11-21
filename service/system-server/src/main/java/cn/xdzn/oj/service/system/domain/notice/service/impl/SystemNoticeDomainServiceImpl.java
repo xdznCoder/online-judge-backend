@@ -1,5 +1,6 @@
 package cn.xdzn.oj.service.system.domain.notice.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.xdzn.oj.common.client.UserClient;
 import cn.xdzn.oj.common.constants.CodeEnum;
 import cn.xdzn.oj.common.exception.CustomException;
@@ -8,6 +9,8 @@ import cn.xdzn.oj.service.system.domain.notice.entity.po.SystemNoticeUser;
 import cn.xdzn.oj.service.system.domain.notice.service.SystemNoticeDomainService;
 import cn.xdzn.oj.service.system.infrastructure.dao.SystemNoticeDao;
 import cn.xdzn.oj.service.system.infrastructure.dao.SystemNoticeUserDao;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,6 +83,40 @@ public class SystemNoticeDomainServiceImpl extends ServiceImpl<SystemNoticeDao, 
                 systemNoticeUserDao.insert(systemNoticeUsers);
             }
             default -> throw new CustomException(CodeEnum.PARAMETER_ERROR);
+        }
+    }
+
+    @Override
+    public Integer getUnReadCount(Long userId) {
+        return Math.toIntExact(systemNoticeUserDao.selectCount(new LambdaQueryWrapper<SystemNoticeUser>()
+                .eq(SystemNoticeUser::getIsRead,0)
+                .eq(SystemNoticeUser::getUserId, userId)
+                .eq(SystemNoticeUser::getIsRead, 0)));
+    }
+
+    @Override
+    public void readNotice(Long loginIdAsLong) {
+        if (loginIdAsLong == null) {
+            throw new CustomException(CodeEnum.LOGIN_EXPIRED);
+        }
+        LambdaUpdateWrapper<SystemNoticeUser> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(SystemNoticeUser::getIsRead, 1)
+                .eq(SystemNoticeUser::getUserId, loginIdAsLong) // 匹配用户 ID
+                .eq(SystemNoticeUser::getIsRead, 0)
+                .eq(SystemNoticeUser::getIsDeleted, 0);
+        // 执行更新操作
+        systemNoticeUserDao.update(updateWrapper);
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        if(id != -1L){
+            systemNoticeUserDao.deleteById(id);
+        }
+        else{
+            LambdaQueryWrapper<SystemNoticeUser> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SystemNoticeUser::getUserId, StpUtil.getLoginIdAsLong());
+            systemNoticeUserDao.delete(queryWrapper);
         }
     }
 
