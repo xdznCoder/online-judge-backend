@@ -1,12 +1,16 @@
 package cn.xdzn.oj.service.user.domain.discussion.service.impl;
 
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionComment;
+import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionCommentLike;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionCommentDomainService;
 import cn.xdzn.oj.service.user.infrastructure.dao.DiscussionCommentDao;
+import cn.xdzn.oj.service.user.infrastructure.dao.DiscussionCommentLikeDao;
 import cn.xdzn.oj.service.user.interfaces.dto.DiscussionCommentListDTO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +22,10 @@ import java.util.stream.Collectors;
 * @createDate 2024-10-30 20:19:09
 */
 @Service
+@RequiredArgsConstructor
 public class DiscussionCommentDomainServiceImpl extends ServiceImpl<DiscussionCommentDao, DiscussionComment>
     implements DiscussionCommentDomainService {
+    private final DiscussionCommentLikeDao discussionCommentLikeDao;
 
     @Override
     public Boolean deleteCommentByDiscussionId(Long id) {
@@ -27,8 +33,10 @@ public class DiscussionCommentDomainServiceImpl extends ServiceImpl<DiscussionCo
     }
 
     @Override
-    public void like(Long id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void like(Integer id,Long uid) {
         update().setSql("like_num=like_num+1").eq("id",id).update();
+        discussionCommentLikeDao.insert(new DiscussionCommentLike().setCid(id).setUid(uid));
     }
 
     @Override

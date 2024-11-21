@@ -12,5 +12,5 @@ public interface DiscussionDomainService extends IService<Discussion> {
 
     void checkAndUpdate(Long id);
 
-    void like(Long id);
+    void like(Integer id, Long uid);
 }

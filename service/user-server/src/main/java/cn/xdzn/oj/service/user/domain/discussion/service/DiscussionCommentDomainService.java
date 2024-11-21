@@ -15,7 +15,7 @@ public interface DiscussionCommentDomainService extends IService<DiscussionComme
 
     Boolean deleteCommentByDiscussionId(Long id);
 
-    void like(Long id);
+    void like(Integer id,Long uid);
 
 
     void deleteCommentByCid(Integer did);

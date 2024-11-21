@@ -6,6 +6,7 @@ import cn.xdzn.oj.common.controller.BaseController;
 import cn.xdzn.oj.common.limit.AccessLimit;
 import cn.xdzn.oj.service.user.application.DiscussionApplicationService;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.Discussion;
+import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionLike;
 import cn.xdzn.oj.service.user.domain.discussion.entity.po.DiscussionReport;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionCommentDomainService;
 import cn.xdzn.oj.service.user.domain.discussion.service.DiscussionDomainService;
@@ -148,7 +149,7 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     @PostMapping("/like")
     @Operation(summary = "点赞")
     @AccessLimit(seconds = 10, maxCount = 3)
-    public Result<Void> like(@RequestBody Long id,@RequestParam(required = false, defaultValue = "1")@Schema(description = "1为讨论点赞，2为评论点赞") int type) {
+    public Result<Void> like(@RequestBody Integer id,@RequestParam(required = false, defaultValue = "1")@Schema(description = "1为讨论点赞，2为评论点赞") int type) {
         applicationService.like(id,type);
          //TODO: 通知
         return Result.success();
@@ -200,6 +201,11 @@ public class DiscussionManage extends BaseController<DiscussionDomainService, Di
     @Operation(summary = "获取评论列表")
     public Result<List<DiscussionCommentListDTO>> commentList(@RequestParam Long did) {
         return Result.success(commentService.listByDid(did));
+    }
+    @Operation(summary = "查询个人点赞列表", description = "只会查询到id,数据回显,前端动态绑定")
+    @GetMapping("/userLikes/{id}")
+    public Result<DiscussionLikeDTO> selectLikesByUid(@PathVariable Long id) {
+        return Result.success(applicationService.selectLikesByUid(id));
     }
     @Override
     protected Class<Discussion> createInstance() {
